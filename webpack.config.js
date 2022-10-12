@@ -25,7 +25,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: `[name]${isDevelopment ? "" : ".[contenthash]"}.js`,
-    path: path.resolve(__dirname, "./dist"),
+    path: path.resolve(__dirname, "./docs"),
     publicPath: "",
   },
   mode: process.env.NODE_ENV || "production",
@@ -43,7 +43,7 @@ module.exports = {
   devServer: {
     port: 1300,
     static: {
-      directory: path.resolve(__dirname, "./dist"),
+      directory: path.resolve(__dirname, "./docs"),
     },
     devMiddleware: {
       index: "index.html",
