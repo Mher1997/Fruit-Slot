@@ -2,6 +2,7 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -10,6 +11,9 @@ const pluginsConfig = [
   new HtmlWebpackPlugin({
     filename: "index.html",
     title: "PixiJS",
+  }),
+  new CopyPlugin({
+    patterns: [{ from: "./src/assets" }],
   }),
 ];
 
@@ -28,6 +32,7 @@ module.exports = {
     path: path.resolve(__dirname, "./docs"),
     publicPath: "",
   },
+  devtool: "source-map",
   mode: process.env.NODE_ENV || "production",
   performance: {
     hints: false,
