@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run dev
+  C:\Program Files\nodejs\node.exe C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add metter-js
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\TortoiseGit\bin;C:\Program Files (x86)\dotnet\;C:\Program Files\Git\bin\;C:\Program Files\Git\cmd\;C:\Users\mher.garanyan\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\mher.garanyan\AppData\Local\Microsoft\WindowsApps;C:\Users\mher.garanyan\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\mher.garanyan\AppData\Roaming\npm;C:\Users\mher.garanyan\AppData\Roaming\nvm;C:\Program Files\nodejs
@@ -14,35 +14,41 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: C:\Users\mher.garanyan\Desktop\web-app\package.json: Unexpected token / in JSON at position 107
-      at JSON.parse (<anonymous>)
-      at C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
-      at Generator.next (<anonymous>)
-      at step (C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+  Error: http://npm.toto.am/metter-js: no such package available
+      at Request.params.callback [as _callback] (C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
+      at Request.self.callback (C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
+      at Request.emit (events.js:375:28)
+      at Request.<anonymous> (C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
+      at Request.emit (events.js:375:28)
+      at IncomingMessage.<anonymous> (C:\Users\mher.garanyan\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
+      at Object.onceWrapper (events.js:481:28)
+      at IncomingMessage.emit (events.js:387:35)
+      at endReadableNT (internal/streams/readable.js:1317:12)
+      at processTicksAndRejections (internal/process/task_queues.js:82:21)
 
 npm manifest: 
   {
     "name": "web-app",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/index.js",
     "scripts": {
-      // "dev": "cross-env NODE_ENV=development webpack serve --hot --open",
-      "dev": "cross-env NODE_ENV=development webpack",
+      "start": "cross-env NODE_ENV=development webpack serve --hot --open",
+      "dev-prd": "cross-env NODE_ENV=production webpack serve --hot --open",
       "build": "cross-env NODE_ENV=production webpack",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "mher.garanyan",
     "license": "ISC",
-    "dependencies": {},
     "devDependencies": {
       "@babel/core": "^7.19.3",
       "@babel/preset-env": "^7.19.3",
       "babel-loader": "^8.2.5",
       "clean-webpack-plugin": "^4.0.0",
+      "copy-webpack-plugin": "^11.0.0",
       "cross-env": "^7.0.3",
       "css-loader": "^6.7.1",
+      "file-loader": "^6.2.0",
       "handlebars": "^4.7.7",
       "handlebars-loader": "^1.7.2",
       "html-webpack-plugin": "^5.5.0",
@@ -53,6 +59,10 @@ npm manifest:
       "webpack": "^5.74.0",
       "webpack-cli": "^4.10.0",
       "webpack-dev-server": "^4.11.1"
+    },
+    "dependencies": {
+      "pixi-spine": "^3.1.0",
+      "pixi.js": "^6.5.5"
     }
   }
 
@@ -1023,6 +1033,261 @@ Lockfile:
     resolved "http://npm.toto.am/@leichtgewicht%2fip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
     integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
   
+  "@nodelib/fs.scandir@2.1.5":
+    version "2.1.5"
+    resolved "http://npm.toto.am/@nodelib%2ffs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
+    integrity sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==
+    dependencies:
+      "@nodelib/fs.stat" "2.0.5"
+      run-parallel "^1.1.9"
+  
+  "@nodelib/fs.stat@2.0.5", "@nodelib/fs.stat@^2.0.2":
+    version "2.0.5"
+    resolved "http://npm.toto.am/@nodelib%2ffs.stat/-/fs.stat-2.0.5.tgz#5bd262af94e9d25bd1e71b05deed44876a222e8b"
+    integrity sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==
+  
+  "@nodelib/fs.walk@^1.2.3":
+    version "1.2.8"
+    resolved "http://npm.toto.am/@nodelib%2ffs.walk/-/fs.walk-1.2.8.tgz#e95737e8bb6746ddedf69c556953494f196fe69a"
+    integrity sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==
+    dependencies:
+      "@nodelib/fs.scandir" "2.1.5"
+      fastq "^1.6.0"
+  
+  "@pixi-spine/base@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2fbase/-/base-3.1.0.tgz#bf9b7f10dcfee8a3f57a51edbd03bc77f45157cd"
+    integrity sha512-4QRXfokT4LE78r446VXwIjgAEKvXJgpwiVcGzArOQ+m8JeJkfFr2vR6ifP6uvNPZIOZ+1E3DF3DVNxIULw71Qw==
+  
+  "@pixi-spine/loader-base@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2floader-base/-/loader-base-3.1.0.tgz#23cea6fb3c62d9999e2774d349767c326a89d7ba"
+    integrity sha512-wSDMRefZedBhRVzRg+N1DqGoJjedaSMW5gh3lHKPPY0Qeb72aa9J3U0aTv82+tTXYN27DyuVjwpm0Qp3r502bA==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+  
+  "@pixi-spine/loader-uni@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2floader-uni/-/loader-uni-3.1.0.tgz#0682f1aaf1cc692fb8a4dd855eef4e9ee818d187"
+    integrity sha512-102slpDqxvT2RcDN1jS2hWHZqOLPtRC5UQfk0ravTysepLGt9YV5b1EWFA0Lt78AoHVADV5fNjxWPvbAisnmgg==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+      "@pixi-spine/loader-base" "~3.1.0"
+      "@pixi-spine/runtime-3.7" "~3.1.0"
+      "@pixi-spine/runtime-3.8" "~3.1.0"
+      "@pixi-spine/runtime-4.1" "~3.1.0"
+  
+  "@pixi-spine/runtime-3.7@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2fruntime-3.7/-/runtime-3.7-3.1.0.tgz#81ff7beccf1356fcf617cad2a2aedc97e4d5ced7"
+    integrity sha512-jXyu7wLa3141YYOnYXhimrLkKWTdKZDfi9H8HwRqFieia5Exrgr7VNyF692UlFjzQlrGwj2PSkm5oNAC77rs5w==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+  
+  "@pixi-spine/runtime-3.8@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2fruntime-3.8/-/runtime-3.8-3.1.0.tgz#83fd19da4a79d2873e7a4a4fd5daf2a93d22dccf"
+    integrity sha512-4j/LZdtaqo/H31wdi4ECMz2CaJRxUAe3IWUEhMwl2DqM3V3WMndedhdvy2W8u1v6A6nLolUOLe7TtlskW8vQsg==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+  
+  "@pixi-spine/runtime-4.1@~3.1.0":
+    version "3.1.0"
+    resolved "http://npm.toto.am/@pixi-spine%2fruntime-4.1/-/runtime-4.1-3.1.0.tgz#95f35f67bb12a6682b0ce2cb209e0d8983c85883"
+    integrity sha512-KKHQAVRu9CaNrLNPjXwAVggVehBy2ChCE3QL5EwT5oVOt8uYhZ3f1UhMFDieqtz+QcqO8jUppfcsvgtFbTnHBQ==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+  
+  "@pixi/accessibility@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2faccessibility/-/accessibility-6.5.5.tgz#046cf0bd4077dcd8c0da5e3f45fc4d4ac31ed458"
+    integrity sha512-mDGDVkNCA1w28zzCT/8x2euxHX55y6ftdDte6FytBwHJHxTzfOKyS6GPqJNrXQB2muu1E/bySqzguiYy1gW/lw==
+  
+  "@pixi/app@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fapp/-/app-6.5.5.tgz#6a9fd77a8c67e672e936376f1cb9c03c939b4037"
+    integrity sha512-VW2kzgj/eNZqGaf+24eL5BGPTHlCDjCYVrKXuFPmPnj48ucUOOKdMQrA8ezmC3LDXsraavwhru8F+JPLUbRtzg==
+  
+  "@pixi/compressed-textures@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fcompressed-textures/-/compressed-textures-6.5.5.tgz#60e16450565bb7dd9ac1f1a1b1936aa7c762f649"
+    integrity sha512-e6T1Kg1o9HLVMniSyHcpgtj2VWQV3cdDizIIvdQs7jbrtZCO5ouehViLP2PWm1ZD63hDj6nyVwmZGvkD7FgH1w==
+  
+  "@pixi/constants@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fconstants/-/constants-6.5.5.tgz#c6f4eb61ea1b5b601e83d23987b093032f793c5a"
+    integrity sha512-tuiN6aeMuQv77UHzGNeJiAUiOrt22dybZYrXAVLOF7mDG+zxT96r7R43DvqrWG3GuNh/VCKE5hQLGQybR21nBA==
+  
+  "@pixi/core@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fcore/-/core-6.5.5.tgz#fca46e04ab79c986369241968c58f1bc91c05aa8"
+    integrity sha512-Vdod5c5oByqBuqSQq+j+aiLtAUzFGQblCm9Awmuyjsu7Hygyh8080GeAduS4YuCIHEGz5aP9KS/KP92pM+m4Cg==
+    dependencies:
+      "@types/offscreencanvas" "^2019.6.4"
+  
+  "@pixi/display@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fdisplay/-/display-6.5.5.tgz#6e0125b3ddb556c66878c6839e620c5ad8bf8d70"
+    integrity sha512-+WnIR9+vrMc6fgdfOPvmsUIggwdAZvjZ0eX3uEEyS6mjFkZCcC8b0fjfpBaTq8dtWWs+sS7ZZqew9TzAlA9o1w==
+  
+  "@pixi/extensions@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fextensions/-/extensions-6.5.5.tgz#ae8f66f891cacf006c2089ae892ce10362031453"
+    integrity sha512-b85GH6xzh0SgPejLguCLBhq9zoq6gizW8Zwyb+W1s1Q+B6sP6LtAMeir3ZefiXT3nOakeUGEv7bLp76Aon3lyw==
+  
+  "@pixi/extract@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fextract/-/extract-6.5.5.tgz#723cbdb97034fe07f657b1b377c1adc4bc6b84e3"
+    integrity sha512-dlGS4BoMAQeMLv2HyfwvLWn4E5/YPuHF32CsclNWvm0A72y7qQYKBRzpQL3Yzo26uflCwNECbTwhcUXaQ3V2tg==
+  
+  "@pixi/filter-alpha@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-alpha/-/filter-alpha-6.5.5.tgz#1d54dc5caa19988cde081e0adfc3bfef725e24b7"
+    integrity sha512-voFl8Euf+amn6/iyNpEfKA7MUV1moylJVe28HBvMuyx5xHp7N/HlcJ2zh2LNxXH2nPu55E1oOWl69+5eYpP+9Q==
+  
+  "@pixi/filter-blur@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-blur/-/filter-blur-6.5.5.tgz#4c882b1df503480b70a70b741fed5bc30a254114"
+    integrity sha512-Xu0593Fu463VBk730x0RxnoVPmYhMV16izjCv8E2VVOFG357yUECHuPsc0L+/LCCjT53wxa3JOzNTJVUJ4HjSg==
+  
+  "@pixi/filter-color-matrix@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-color-matrix/-/filter-color-matrix-6.5.5.tgz#5714774a98df7706db7cf21921cefadda68854b4"
+    integrity sha512-NGAZ11mwYegovolym0Iw/i/Tg0aXkRW1nhZMe/5AnWYg81tDpBeUfJkHXErLBZO1Kx7+8EJzMpMv3oEhSYvrug==
+  
+  "@pixi/filter-displacement@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-displacement/-/filter-displacement-6.5.5.tgz#ae15a26b8bbd26b3f39e2778120fc8dfeed69078"
+    integrity sha512-GfmsdZmFFSlcBapUp2ElaIJE1Sy14RdxdqTA7PV72U2RL2gzBSD7rOasBoWynkPv3ILsVMGVleuuRitjPhRBDw==
+  
+  "@pixi/filter-fxaa@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-fxaa/-/filter-fxaa-6.5.5.tgz#4094e7c65b4c985bd52936efdac4fb6dd5c7df52"
+    integrity sha512-luW5Rhu9i0FdC2+L+dc/dMf4ImC+yG4CdIuK9zgXwYGb6WLyCuEXI5fhdrpdYU9SmTfdwa5eNWqO0mXplJBAig==
+  
+  "@pixi/filter-noise@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ffilter-noise/-/filter-noise-6.5.5.tgz#4a9cd555f9cdfba232c5642f47062e76e4c7af64"
+    integrity sha512-3ttFuNfMim+Fd7ccZF69UAPnMsF+5AivX6i1V8WUj75Ei/Fq6JQK+PPbZ2FQQHOYa1e1B6Ej4uvNCkSXs87/UA==
+  
+  "@pixi/graphics@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fgraphics/-/graphics-6.5.5.tgz#95b1a7536ea4bf0f5e19b65998525519f5d903fe"
+    integrity sha512-gBhznqpNv5IX7exnq3dgdjGaGfyi9quIFnjMC2pBihSJLc+WokM00rhRxz6IfNknDBQG0vkTXkc0WOPbVlt9Nw==
+  
+  "@pixi/interaction@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2finteraction/-/interaction-6.5.5.tgz#207158392050310f344ff02f489e7fd3a8f54600"
+    integrity sha512-YARy4jeU8EbDQSqtDUguMwQS/wPZjFDAKpuOyraF+DeSN+21+hTRcU3YR4Cq2gqb74uBr5ods4fN9BevyaBjcw==
+  
+  "@pixi/loaders@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2floaders/-/loaders-6.5.5.tgz#07d56e64f5a9e55ff086e8615c65514fcd6f4e83"
+    integrity sha512-fFvdXYh5ije/pHi4XghF3lF71F/ng/yE2+V3n8w/i7SpYI/CDmwjgfbVNtMJ4LaflJAyPcF8NF7r+eKr/1vDFQ==
+  
+  "@pixi/math@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmath/-/math-6.5.5.tgz#d32ad58dcb9ddcdd7200f431a39c360ca75e7a30"
+    integrity sha512-3Y8mfcPjmhIBlcUPTlQXuBBl+cyKWHp2mdXtJg3+E72poO0wTnW175oi38alxSgfKE4jZIDtoUaUoAAuJxmMoA==
+  
+  "@pixi/mesh-extras@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmesh-extras/-/mesh-extras-6.5.5.tgz#491a85524365c1ac40dd0582e7602f7ca33489b2"
+    integrity sha512-j0shm5Sbn1OvtBDQ56uSc6vYkkRXSVrYr7ywSNY05/0yE3cbLWiuA8ZC7fd5iLbDCxvgl3QaYwtz2ao9V8Sn9A==
+  
+  "@pixi/mesh@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmesh/-/mesh-6.5.5.tgz#89e505cb01121ad2a52f3daa448a80a5ac51009a"
+    integrity sha512-IdI8+jIggDoYSCwdxFQqWekWt5eKvL0kFmrseEIABe3HdHBOuROCz2xTXffqdy9RznsbFSRkmpgiO9fZWibzOg==
+  
+  "@pixi/mixin-cache-as-bitmap@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmixin-cache-as-bitmap/-/mixin-cache-as-bitmap-6.5.5.tgz#bf441d4c643ad9de8e850b4ef3e884ce93d70610"
+    integrity sha512-rlHW5IbJV6aUhiQpDDjUBtlR5Fn+LhJjpHWHmeurhFMyMFNFGm6BNLfAIoxUe6VMm6oZOYOB6y3MNcAZeg+fXg==
+  
+  "@pixi/mixin-get-child-by-name@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmixin-get-child-by-name/-/mixin-get-child-by-name-6.5.5.tgz#892116d3f925fafcd3fc2341c39cb423e6d9e437"
+    integrity sha512-Oz/6wCmJQqPwI8W0Cs7b0QGjCcQtI7THStkm5TlqcQS7quyAnRsaaZ9yh7BPLnZnaVGXaFZ0+WmYAoc0FCc9Lw==
+  
+  "@pixi/mixin-get-global-position@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fmixin-get-global-position/-/mixin-get-global-position-6.5.5.tgz#1ff304c6161beec4deef8e13ac67d760c531f87a"
+    integrity sha512-8fftShp18r/imrgAcaL441VegywrX1rOX/XaYa5EU2pUXi37WRBmn5q3HKY0K/SV0d+EduzDQsdxzFkNuG82Zw==
+  
+  "@pixi/particle-container@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fparticle-container/-/particle-container-6.5.5.tgz#894f886137be51e2be613c8c13b13fdf57fb7261"
+    integrity sha512-2r/YD1ilSML3BGBPeL08IW6wwqy201xRRQuOV+/AIDFOy4CXbGhoA2hEP9AvNr3DDCPApM53BECppjcihPyMEA==
+  
+  "@pixi/polyfill@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fpolyfill/-/polyfill-6.5.5.tgz#3e5f5a52b3e08c2117dce0d2f5ec2611c2c7ee1d"
+    integrity sha512-hyOs05hw191uizq5PNRNfO3xgZu5N0lRdaGJi72gvNX2N16pHnjpruazx/ae4eoS3H242+W4N63CvfxJ16ezyg==
+    dependencies:
+      object-assign "^4.1.1"
+      promise-polyfill "^8.2.0"
+  
+  "@pixi/prepare@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fprepare/-/prepare-6.5.5.tgz#85072a5e68d0513ea22157be3d7849fb4a7eaaa2"
+    integrity sha512-IXPjIP8xtGkwOhrAxPcxRPvj9wdeA007QDZcDie1ufHOJhHPvB1ryfT1jtEMSF7xPQ/F8589UVgDM+hY8Ij/Qg==
+  
+  "@pixi/runner@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2frunner/-/runner-6.5.5.tgz#014e528de7568dd12a46fc5958485aa0c90076fb"
+    integrity sha512-IrfkNSgFTMnzO3zbPIYTsRPETu3s9mEGIyjAu34OShrg7GxgLtXjV9H04ssqkIONsQ73idnwm9/s6pT5lNFZ1Q==
+  
+  "@pixi/settings@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fsettings/-/settings-6.5.5.tgz#747864f14062d71b7bd0d761f795440bcc95daf3"
+    integrity sha512-U6xeE9Ri10Rm0Ttjhxc0vc2Qzu2NhB9j/YjvO5NwtW6Adx1SsGz71Pgmebt/FoR4OKU4rtDnRKZOfem7LCFoCA==
+  
+  "@pixi/sprite-animated@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fsprite-animated/-/sprite-animated-6.5.5.tgz#8b09173f2454db41738cad9001f86030c8e1d88d"
+    integrity sha512-pvjeOkMrlbvKKO4ZDRKdO97ZKt2LUfLNUCfjU+PyEgJww/6vWeY9IQj89fc2QXGPOYIGrZeT8AuYqPCtJMktHw==
+  
+  "@pixi/sprite-tiling@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fsprite-tiling/-/sprite-tiling-6.5.5.tgz#d528efe5553770a13f810b9ac83a4db0ad7be656"
+    integrity sha512-noxIGDvsq5tmINElqjcCnfFofY5CRTWOgLPyL9vI2zk1QhTBW5T/XHENoWFWyuCZgFkEdI1BcO1Yug0q6u+OgQ==
+  
+  "@pixi/sprite@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fsprite/-/sprite-6.5.5.tgz#39276f308fb610e66fd36726112c5e6013d07013"
+    integrity sha512-s8T5D4zoDgj9DWnPGSHoMwJ4uLs9CDp9cgfzTOhwIirqTeoajpywfNFS5RAFAyVCdh4ltSG2oujP8a86eWF0+A==
+  
+  "@pixi/spritesheet@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fspritesheet/-/spritesheet-6.5.5.tgz#441c78ee9e211714e7394ad2e43830cdabd3d204"
+    integrity sha512-LCfR1iVYSh0pJUM+PDP/FcP45AV6II3zkt8ojtHHcgsDN1qeggbmIEJ/ohvSMLSpKcLHYXv984wu0wp/fB6NdA==
+  
+  "@pixi/text-bitmap@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ftext-bitmap/-/text-bitmap-6.5.5.tgz#168d83eb041844a8dbcacee113a8d216ef43554a"
+    integrity sha512-nMi7lb3sYAnPPZ9jF/DxmOo0rjh8/Xmc0YYslagvqFJSlowcF+N9HjMOO5WKyP1OBa/gGrpwrLp9FTmdV4T+MQ==
+  
+  "@pixi/text@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2ftext/-/text-6.5.5.tgz#2805c670776c4c64efcb9cd66c1c283dcc5452bd"
+    integrity sha512-u33ESpNqtZ4IaBiQkq5BT2KeQYcqokfr5VNatYXIMO8jbHktm0Lwqca9pdr+GhS2/DUyyiRfCmNaPHoabjPo6Q==
+  
+  "@pixi/ticker@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2fticker/-/ticker-6.5.5.tgz#e95bc10d237215fcba5156ad513ead9dfc436032"
+    integrity sha512-S/LALaHQJTldEpFqgAUgi/fc6/XnDUg5k0DXJLfWT2p1hzuo8q009Izpi/wxd4hPZiOlViQtWyrstjMtrQz2AQ==
+  
+  "@pixi/utils@6.5.5":
+    version "6.5.5"
+    resolved "http://npm.toto.am/@pixi%2futils/-/utils-6.5.5.tgz#fa1af1a1cb2fa732cb634249c734efb4037eb92f"
+    integrity sha512-QtcRR+/Y/F49rQ1vVLsc6dMoLLyLTIJxHDSHxYvlGpQWZG+mRvaWYPZZwFgjdCKzzft1RiwkXI2vL4Zxqfg9CQ==
+    dependencies:
+      "@types/earcut" "^2.1.0"
+      earcut "^2.2.4"
+      eventemitter3 "^3.1.0"
+      url "^0.11.0"
+  
   "@types/body-parser@*":
     version "1.19.2"
     resolved "http://npm.toto.am/@types%2fbody-parser/-/body-parser-1.19.2.tgz#aea2059e28b7658639081347ac4fab3de166e6f0"
@@ -1052,6 +1317,11 @@ Lockfile:
     integrity sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==
     dependencies:
       "@types/node" "*"
+  
+  "@types/earcut@^2.1.0":
+    version "2.1.1"
+    resolved "http://npm.toto.am/@types%2fearcut/-/earcut-2.1.1.tgz#573a0af609f17005c751f6f4ffec49cfe358ea51"
+    integrity sha512-w8oigUCDjElRHRRrMvn/spybSMyX8MTkKA5Dv+tS1IE/TgmNZPqUYtvYBXGY8cieSE66gm+szeK+bnbxC2xHTQ==
   
   "@types/eslint-scope@^3.7.3":
     version "3.7.4"
@@ -1137,6 +1407,11 @@ Lockfile:
     version "18.8.0"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-18.8.0.tgz#b8ee8d83a99470c0661bd899417fcd77060682fe"
     integrity sha512-u+h43R6U8xXDt2vzUaVP3VwjjLyOJk6uEciZS8OSyziUQGOwmk+l+4drxcsDboHXwyTaqS1INebghmWMRxq3LA==
+  
+  "@types/offscreencanvas@^2019.6.4":
+    version "2019.7.0"
+    resolved "http://npm.toto.am/@types%2foffscreencanvas/-/offscreencanvas-2019.7.0.tgz#e4a932069db47bb3eabeb0b305502d01586fa90d"
+    integrity sha512-PGcyveRIpL1XIqK8eBsmRBt76eFgtzuPiSTyKHZxnGemp2yzGzWpjYKAfK3wIMiU7eH+851yEpiuP8JZerTmWg==
   
   "@types/qs@*":
     version "6.9.7"
@@ -1747,6 +2022,18 @@ Lockfile:
     resolved "http://npm.toto.am/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
     integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
   
+  copy-webpack-plugin@^11.0.0:
+    version "11.0.0"
+    resolved "http://npm.toto.am/copy-webpack-plugin/-/copy-webpack-plugin-11.0.0.tgz#96d4dbdb5f73d02dd72d0528d1958721ab72e04a"
+    integrity sha512-fX2MWpamkW0hZxMEg0+mYnA40LTosOSa5TqZ9GYIBzyJa9C3QUaMPSE2xAi/buNr8u89SfD9wHSQVBzrRa/SOQ==
+    dependencies:
+      fast-glob "^3.2.11"
+      glob-parent "^6.0.1"
+      globby "^13.1.1"
+      normalize-path "^3.0.0"
+      schema-utils "^4.0.0"
+      serialize-javascript "^6.0.0"
+  
   core-js-compat@^3.25.1:
     version "3.25.5"
     resolved "http://npm.toto.am/core-js-compat/-/core-js-compat-3.25.5.tgz#0016e8158c904f7b059486639e6e82116eafa7d9"
@@ -1877,6 +2164,13 @@ Lockfile:
     resolved "http://npm.toto.am/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
     integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
   
+  dir-glob@^3.0.1:
+    version "3.0.1"
+    resolved "http://npm.toto.am/dir-glob/-/dir-glob-3.0.1.tgz#56dbf73d992a4a93ba1584f4534063fd2e41717f"
+    integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
+    dependencies:
+      path-type "^4.0.0"
+  
   dns-equal@^1.0.0:
     version "1.0.0"
     resolved "http://npm.toto.am/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -1933,6 +2227,11 @@ Lockfile:
     dependencies:
       no-case "^3.0.4"
       tslib "^2.0.3"
+  
+  earcut@^2.2.4:
+    version "2.2.4"
+    resolved "http://npm.toto.am/earcut/-/earcut-2.2.4.tgz#6d02fd4d68160c114825d06890a92ecaae60343a"
+    integrity sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ==
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -2032,6 +2331,11 @@ Lockfile:
     resolved "http://npm.toto.am/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
     integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
   
+  eventemitter3@^3.1.0:
+    version "3.1.2"
+    resolved "http://npm.toto.am/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
+    integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
+  
   eventemitter3@^4.0.0:
     version "4.0.7"
     resolved "http://npm.toto.am/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
@@ -2099,6 +2403,17 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
     integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
   
+  fast-glob@^3.2.11:
+    version "3.2.12"
+    resolved "http://npm.toto.am/fast-glob/-/fast-glob-3.2.12.tgz#7f39ec99c2e6ab030337142da9e0c18f37afae80"
+    integrity sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==
+    dependencies:
+      "@nodelib/fs.stat" "^2.0.2"
+      "@nodelib/fs.walk" "^1.2.3"
+      glob-parent "^5.1.2"
+      merge2 "^1.3.0"
+      micromatch "^4.0.4"
+  
   fast-json-stable-stringify@^2.0.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz#874bf69c6f404c2b5d99c481341399fd55892633"
@@ -2114,12 +2429,27 @@ Lockfile:
     resolved "http://npm.toto.am/fastparse/-/fastparse-1.1.2.tgz#91728c5a5942eced8531283c79441ee4122c35a9"
     integrity sha512-483XLLxTVIwWK3QTrMGRqUfUpoOs/0hbQrl2oz4J0pAcm3A3bu84wxTFqGqkJzewCLdME38xJLJAxBABfQT8sQ==
   
+  fastq@^1.6.0:
+    version "1.13.0"
+    resolved "http://npm.toto.am/fastq/-/fastq-1.13.0.tgz#616760f88a7526bdfc596b7cab8c18938c36b98c"
+    integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
+    dependencies:
+      reusify "^1.0.4"
+  
   faye-websocket@^0.11.3:
     version "0.11.4"
     resolved "http://npm.toto.am/faye-websocket/-/faye-websocket-0.11.4.tgz#7f0d9275cfdd86a1c963dc8b65fcc451edcbb1da"
     integrity sha512-CzbClwlXAuiRQAlUyfqPgvPoNKTckTPGfwZV4ZdAhVcP2lh9KUxJg2b5GkE7XbjKQ3YJnQ9z6D9ntLAlB+tP8g==
     dependencies:
       websocket-driver ">=0.5.1"
+  
+  file-loader@^6.2.0:
+    version "6.2.0"
+    resolved "http://npm.toto.am/file-loader/-/file-loader-6.2.0.tgz#baef7cf8e1840df325e4390b4484879480eebe4d"
+    integrity sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==
+    dependencies:
+      loader-utils "^2.0.0"
+      schema-utils "^3.0.0"
   
   fill-range@^7.0.1:
     version "7.0.1"
@@ -2212,12 +2542,19 @@ Lockfile:
     resolved "http://npm.toto.am/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
     integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
   
-  glob-parent@~5.1.2:
+  glob-parent@^5.1.2, glob-parent@~5.1.2:
     version "5.1.2"
     resolved "http://npm.toto.am/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
     integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
     dependencies:
       is-glob "^4.0.1"
+  
+  glob-parent@^6.0.1:
+    version "6.0.2"
+    resolved "http://npm.toto.am/glob-parent/-/glob-parent-6.0.2.tgz#6d237d99083950c79290f24c7642a3de9a28f9e3"
+    integrity sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==
+    dependencies:
+      is-glob "^4.0.3"
   
   glob-to-regexp@^0.4.1:
     version "0.4.1"
@@ -2240,6 +2577,17 @@ Lockfile:
     version "11.12.0"
     resolved "http://npm.toto.am/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
     integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
+  
+  globby@^13.1.1:
+    version "13.1.2"
+    resolved "http://npm.toto.am/globby/-/globby-13.1.2.tgz#29047105582427ab6eca4f905200667b056da515"
+    integrity sha512-LKSDZXToac40u8Q1PQtZihbNdTYSNMuWe+K5l+oa6KgDzSvVrHXlJy40hUP522RjAIoNLJYBJi7ow+rbFpIhHQ==
+    dependencies:
+      dir-glob "^3.0.1"
+      fast-glob "^3.2.11"
+      ignore "^5.2.0"
+      merge2 "^1.4.1"
+      slash "^4.0.0"
   
   globby@^6.1.0:
     version "6.1.0"
@@ -2435,6 +2783,11 @@ Lockfile:
     resolved "http://npm.toto.am/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
     integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
   
+  ignore@^5.2.0:
+    version "5.2.0"
+    resolved "http://npm.toto.am/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
+    integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
+  
   immutable@^4.0.0:
     version "4.1.0"
     resolved "http://npm.toto.am/immutable/-/immutable-4.1.0.tgz#f795787f0db780183307b9eb2091fcac1f6fafef"
@@ -2505,7 +2858,7 @@ Lockfile:
     resolved "http://npm.toto.am/is-extglob/-/is-extglob-2.1.1.tgz#a88c02535791f02ed37c76a1b9ea9773c833f8c2"
     integrity sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=
   
-  is-glob@^4.0.1, is-glob@~4.0.1:
+  is-glob@^4.0.1, is-glob@^4.0.3, is-glob@~4.0.1:
     version "4.0.3"
     resolved "http://npm.toto.am/is-glob/-/is-glob-4.0.3.tgz#64f61e42cbbb2eec2071a9dac0b28ba1e65d5084"
     integrity sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==
@@ -2717,12 +3070,17 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
     integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
   
+  merge2@^1.3.0, merge2@^1.4.1:
+    version "1.4.1"
+    resolved "http://npm.toto.am/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
+    integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
+  
   methods@~1.1.2:
     version "1.1.2"
     resolved "http://npm.toto.am/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
     integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
   
-  micromatch@^4.0.2:
+  micromatch@^4.0.2, micromatch@^4.0.4:
     version "4.0.5"
     resolved "http://npm.toto.am/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
     integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
@@ -2851,7 +3209,7 @@ Lockfile:
     dependencies:
       boolbase "^1.0.0"
   
-  object-assign@^4.0.1, object-assign@^4.1.0:
+  object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
     version "4.1.1"
     resolved "http://npm.toto.am/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
     integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -2999,6 +3357,11 @@ Lockfile:
     resolved "http://npm.toto.am/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
     integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
   
+  path-type@^4.0.0:
+    version "4.0.0"
+    resolved "http://npm.toto.am/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
+    integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+  
   picocolors@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
@@ -3030,6 +3393,60 @@ Lockfile:
     version "2.0.4"
     resolved "http://npm.toto.am/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
     integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
+  
+  pixi-spine@^3.1.0:
+    version "3.1.0"
+    resolved "http://npm.toto.am/pixi-spine/-/pixi-spine-3.1.0.tgz#1a10f45893a7c7229e1e7ee1970bc0e7454b1cdd"
+    integrity sha512-pcNgpq+ltULSenzLCqbdO0eH5NRhNcMXkXJw4Zdec+vfciUctXj5Ho/aDdTt0b5PlW4TzTYRfaHdu5ZhTv77ew==
+    dependencies:
+      "@pixi-spine/base" "~3.1.0"
+      "@pixi-spine/loader-base" "~3.1.0"
+      "@pixi-spine/loader-uni" "~3.1.0"
+      "@pixi-spine/runtime-3.7" "~3.1.0"
+      "@pixi-spine/runtime-3.8" "~3.1.0"
+      "@pixi-spine/runtime-4.1" "~3.1.0"
+  
+  pixi.js@^6.5.5:
+    version "6.5.5"
+    resolved "http://npm.toto.am/pixi.js/-/pixi.js-6.5.5.tgz#74e2943cb6fe7d1f004bf9f8f46aa5cd8f1be61e"
+    integrity sha512-SfvUFl0RNnuELbU4IschzWGPSP1yRidEffQlbHnsXY1xvaCE7MG5snQzlufzAyiyiwRID1I5plSKtVjNvZfk9Q==
+    dependencies:
+      "@pixi/accessibility" "6.5.5"
+      "@pixi/app" "6.5.5"
+      "@pixi/compressed-textures" "6.5.5"
+      "@pixi/constants" "6.5.5"
+      "@pixi/core" "6.5.5"
+      "@pixi/display" "6.5.5"
+      "@pixi/extensions" "6.5.5"
+      "@pixi/extract" "6.5.5"
+      "@pixi/filter-alpha" "6.5.5"
+      "@pixi/filter-blur" "6.5.5"
+      "@pixi/filter-color-matrix" "6.5.5"
+      "@pixi/filter-displacement" "6.5.5"
+      "@pixi/filter-fxaa" "6.5.5"
+      "@pixi/filter-noise" "6.5.5"
+      "@pixi/graphics" "6.5.5"
+      "@pixi/interaction" "6.5.5"
+      "@pixi/loaders" "6.5.5"
+      "@pixi/math" "6.5.5"
+      "@pixi/mesh" "6.5.5"
+      "@pixi/mesh-extras" "6.5.5"
+      "@pixi/mixin-cache-as-bitmap" "6.5.5"
+      "@pixi/mixin-get-child-by-name" "6.5.5"
+      "@pixi/mixin-get-global-position" "6.5.5"
+      "@pixi/particle-container" "6.5.5"
+      "@pixi/polyfill" "6.5.5"
+      "@pixi/prepare" "6.5.5"
+      "@pixi/runner" "6.5.5"
+      "@pixi/settings" "6.5.5"
+      "@pixi/sprite" "6.5.5"
+      "@pixi/sprite-animated" "6.5.5"
+      "@pixi/sprite-tiling" "6.5.5"
+      "@pixi/spritesheet" "6.5.5"
+      "@pixi/text" "6.5.5"
+      "@pixi/text-bitmap" "6.5.5"
+      "@pixi/ticker" "6.5.5"
+      "@pixi/utils" "6.5.5"
   
   pkg-dir@^4.1.0, pkg-dir@^4.2.0:
     version "4.2.0"
@@ -3101,6 +3518,11 @@ Lockfile:
     resolved "http://npm.toto.am/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
     integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
   
+  promise-polyfill@^8.2.0:
+    version "8.2.3"
+    resolved "http://npm.toto.am/promise-polyfill/-/promise-polyfill-8.2.3.tgz#2edc7e4b81aff781c88a0d577e5fe9da822107c6"
+    integrity sha512-Og0+jCRQetV84U8wVjMNccfGCnMQ9mGs9Hv78QFe+pSDD3gWTpz0y+1QCuxy5d/vBFuZ3iwP2eycAkvqIMPmWg==
+  
   proxy-addr@~2.0.7:
     version "2.0.7"
     resolved "http://npm.toto.am/proxy-addr/-/proxy-addr-2.0.7.tgz#f19fe69ceab311eeb94b42e70e8c2070f9ba1025"
@@ -3108,6 +3530,11 @@ Lockfile:
     dependencies:
       forwarded "0.2.0"
       ipaddr.js "1.9.1"
+  
+  punycode@1.3.2:
+    version "1.3.2"
+    resolved "http://npm.toto.am/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
+    integrity sha1-llOgNvt8HuQjQvIyXM7v6jkmxI0=
   
   punycode@^2.1.0:
     version "2.1.1"
@@ -3120,6 +3547,16 @@ Lockfile:
     integrity sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==
     dependencies:
       side-channel "^1.0.4"
+  
+  querystring@0.2.0:
+    version "0.2.0"
+    resolved "http://npm.toto.am/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
+    integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
+  
+  queue-microtask@^1.2.2:
+    version "1.2.3"
+    resolved "http://npm.toto.am/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
+    integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
   
   randombytes@^2.1.0:
     version "2.1.0"
@@ -3279,6 +3716,11 @@ Lockfile:
     resolved "http://npm.toto.am/retry/-/retry-0.13.1.tgz#185b1587acf67919d63b357349e03537b2484658"
     integrity sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==
   
+  reusify@^1.0.4:
+    version "1.0.4"
+    resolved "http://npm.toto.am/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
+    integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+  
   rimraf@^2.6.3:
     version "2.7.1"
     resolved "http://npm.toto.am/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
@@ -3292,6 +3734,13 @@ Lockfile:
     integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
     dependencies:
       glob "^7.1.3"
+  
+  run-parallel@^1.1.9:
+    version "1.2.0"
+    resolved "http://npm.toto.am/run-parallel/-/run-parallel-1.2.0.tgz#66d1368da7bdf921eb9d95bd1a9229e7f21a43ee"
+    integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
+    dependencies:
+      queue-microtask "^1.2.2"
   
   safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
     version "5.1.2"
@@ -3334,7 +3783,7 @@ Lockfile:
       ajv "^6.12.4"
       ajv-keywords "^3.5.2"
   
-  schema-utils@^3.1.0, schema-utils@^3.1.1:
+  schema-utils@^3.0.0, schema-utils@^3.1.0, schema-utils@^3.1.1:
     version "3.1.1"
     resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-3.1.1.tgz#bc74c4b6b6995c1d88f76a8b77bea7219e0c8281"
     integrity sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw==
@@ -3468,6 +3917,11 @@ Lockfile:
     version "3.0.7"
     resolved "http://npm.toto.am/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
     integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+  
+  slash@^4.0.0:
+    version "4.0.0"
+    resolved "http://npm.toto.am/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
+    integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
   
   sockjs@^0.3.24:
     version "0.3.24"
@@ -3697,6 +4151,14 @@ Lockfile:
     integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
     dependencies:
       punycode "^2.1.0"
+  
+  url@^0.11.0:
+    version "0.11.0"
+    resolved "http://npm.toto.am/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
+    integrity sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE=
+    dependencies:
+      punycode "1.3.2"
+      querystring "0.2.0"
   
   util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
     version "1.0.2"

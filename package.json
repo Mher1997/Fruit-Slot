@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve --hot --open",
+    "start": "cross-env NODE_ENV=development webpack serve --hot --open",
     "dev-prd": "cross-env NODE_ENV=production webpack serve --hot --open",
     "build": "cross-env NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,6 +32,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "matter-js": "^0.18.0",
     "pixi-spine": "^3.1.0",
     "pixi.js": "^6.5.5"
   }

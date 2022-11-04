@@ -9,82 +9,206 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/dist/esm/pixi.mjs");
-/* harmony import */ var pixi_spine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pixi-spine */ "./node_modules/pixi-spine/lib/all.es.js");
-/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.scss */ "./src/index.scss");
+/* harmony import */ var matter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! matter-js */ "./node_modules/matter-js/build/matter.js");
+/* harmony import */ var matter_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(matter_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.scss */ "./src/index.scss");
 
 
+var windowCenter = window.innerWidth / 2; // module aliases
 
-var app = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Application({
-  autoResize: true,
-  width: window.innerWidth,
-  height: window.innerHeight - 5
+var Engine = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Engine),
+    Render = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Render),
+    Runner = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Runner),
+    Bodies = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Bodies),
+    Events = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Events),
+    Mouse = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Mouse),
+    Composite = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Composite),
+    Composites = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Composites),
+    MouseConstraint = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().MouseConstraint); // create an engine
+
+var engine = Engine.create();
+var world = engine.world; // create a renderer
+
+var render = Render.create({
+  element: document.body,
+  engine: engine,
+  options: {
+    width: window.innerWidth,
+    height: window.innerHeight - 10,
+    wireframes: false
+  }
 });
-document.body.appendChild(app.view);
-var container = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Container();
-var background = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Sprite.from("background.png");
-app.loader.add("spineboy", "spineboy.json").load(onAssetsLoaded);
-app.stage.addChild(background);
-container.interactive = true;
-container.buttonMode = true;
+world.gravity.y = 1.6; // run the renderer
 
-function onAssetsLoaded(loader, _ref) {
-  var spineboy = _ref.spineboy;
-  var spineBoy = new pixi_spine__WEBPACK_IMPORTED_MODULE_1__.Spine(spineboy.spineData);
-  spineBoy.x = 100;
-  spineBoy.y = app.screen.height;
-  spineBoy.scale.set(0.8);
-  container.addChild(spineBoy);
-  app.stage.addChild(container);
-  spineBoy.state.addListener({
-    start: function start(entry) {
-      console.log("animation is set at " + entry.trackIndex);
+Render.run(render);
+var runner = Runner.create();
+Runner.run(runner, engine);
+var polygons = [];
+var category1 = 0x0001;
+var category2 = 0x0002;
+var circles = [];
+var startFromX = 1002;
+var startFromY = 200;
+var gapY = 45;
+var gapX = 37.5;
+var plinkos = 13;
+var ways = plinkos - 2;
+
+for (var i = 0; i < plinkos; i++) {
+  var item = Bodies.rectangle(775 + i * 38, 850, 70, 1, {
+    isStatic: true,
+    angle: Math.PI * 0.5
+  });
+  polygons.push(item);
+} // polygons.push(
+//   Bodies.rectangle(windowCenter, window.innerHeight, windowCenter, 1, {
+//     isStatic: true,
+//   })
+// );
+// plinkos
+
+
+for (var _i = 0; _i < plinkos; _i++) {
+  var startY = _i * gapY + startFromY;
+
+  if (_i !== 0) {
+    var startCountFromX = -_i / 2;
+
+    for (var j = 0; j <= _i; j++) {
+      var _item = Bodies.circle((startCountFromX + j) * gapX + startFromX, startY, 5, {
+        isStatic: true,
+        friction: 1,
+        restitution: 1,
+        density: 1,
+        collisionFilter: {
+          category: category1
+        },
+        rowIndex: _i,
+        label: "plinko",
+        render: {
+          fillStyle: "white",
+          lineWidth: 0
+        }
+      });
+
+      circles.push(_item);
+    }
+  }
+}
+
+Composite.add(world, circles);
+Composite.add(world, polygons); // Composite.add(world, stack);
+
+var mouse = Mouse.create(render.canvas);
+var mouseConstraint = MouseConstraint.create(engine, {
+  mouse: mouse,
+  constraint: {
+    stiffness: 0.2
+  }
+});
+
+var handlePlink = function handlePlink() {
+  var resWays = [];
+  var result = 6;
+
+  for (var _i2 = 0; _i2 < ways; _i2++) {
+    resWays.push(_i2 < result ? "+" : "-");
+  }
+
+  Composite.add(world, Bodies.circle(1000, 200, 14, {
+    isStatic: false,
+    type: "body",
+    friction: 1,
+    restitution: 0.8,
+    density: 0.1,
+    label: "ball",
+    resWays: shuffle(resWays),
+    collisionFilter: {
+      mask: category1,
+      category: category2
     },
-    end: function end(entry) {
-      var skeleton = spineBoy.skeleton;
-      skeleton.setToSetupPose();
+    render: {
+      fillStyle: "#13bccf",
+      lineWidth: 0
     }
-  });
-  var ticker = pixi_js__WEBPACK_IMPORTED_MODULE_0__.Ticker.shared;
-  ticker.autoStart = false;
-  ticker.add(function (delta) {
-    spineBoy.x = (spineBoy.x + delta * app.screen.width / 500) % (app.screen.width + 100);
-  });
-  document.addEventListener("keydown", onKeyDown);
-  document.addEventListener("keyup", onKeyUp);
-  var isKeyDown = false;
+  }));
+};
 
-  function onKeyDown(key) {
-    if (isKeyDown) {
-      return;
+Events.on(mouseConstraint, "mousedown", handlePlink);
+Events.on(engine, "collisionStart", function (event) {
+  var pairs = event.pairs;
+  var bodyA = pairs[0].bodyA;
+  bodyA.render.fillStyle = "#13bccf";
+});
+Events.on(engine, "collisionActive", function (event) {
+  var pairs = event.pairs;
+  var bodyA = pairs[0].bodyA;
+  bodyA.render.fillStyle = "#13bccf";
+});
+Events.on(engine, "collisionEnd", function (event) {
+  var pairs = event.pairs;
+
+  for (var _i3 = 0; _i3 < pairs.length; _i3++) {
+    var pair = pairs[_i3];
+    var bodyA = pair.bodyA,
+        bodyB = pair.bodyB;
+    var ballBody = void 0,
+        plinko = void 0;
+
+    if (bodyA.label === "ball") {
+      ballBody = bodyA;
     }
 
-    spineBoy.state.clearTracks();
-
-    if (key.keyCode === 87 || key.keyCode === 38) {
-      spineBoy.state.setAnimation(1, "jump", false);
+    if (bodyA.label === "plinko") {
+      plinko = bodyA;
     }
 
-    if (key.keyCode === 68 || key.keyCode === 39) {
-      ticker.start();
-      spineBoy.state.addAnimation(0, "walk", true);
+    if (bodyB.label === "ball") {
+      ballBody = bodyB;
     }
 
-    isKeyDown = true;
+    if (bodyB.label === "plinko") {
+      plinko = bodyB;
+    }
+
+    if (ballBody && plinko) {
+      var angleAbsolute = plinko.position.y - (ballBody.position.y + ballBody.circleRadius) - 3;
+
+      if (angleAbsolute >= 0) {
+        var resWays = ballBody.resWays;
+        var plinkoRow = plinko.rowIndex;
+
+        if (resWays) {
+          matter_js__WEBPACK_IMPORTED_MODULE_0__.Body.setVelocity(ballBody, {
+            x: resWays[plinkoRow - 2] === "+" ? 1.5 : -1.5,
+            y: -2
+          });
+        }
+      }
+
+      plinko.render.fillStyle = "white";
+    }
+  }
+});
+Render.lookAt(render, Composite.allBodies(world));
+Composite.add(world, mouseConstraint);
+render.mouse = mouse;
+
+function shuffle(array) {
+  var currentIndex = array.length,
+      randomIndex; // While there remain elements to shuffle.
+
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--; // And swap it with the current element.
+
+    var _ref = [array[randomIndex], array[currentIndex]];
+    array[currentIndex] = _ref[0];
+    array[randomIndex] = _ref[1];
   }
 
-  function onKeyUp(key) {
-    if (key.keyCode === 65 || key.keyCode === 37) {
-      spineBoy.state.clearTracks();
-    }
-
-    if (key.keyCode === 68 || key.keyCode === 39) {
-      ticker.stop();
-      spineBoy.state.clearTracks();
-    }
-
-    isKeyDown = false;
-  }
+  return array;
 }
 
 /***/ }),
@@ -243,7 +367,7 @@ if (true) {
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
 /******/ 			id: moduleId,
-/******/ 			loaded: false,
+/******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
@@ -257,9 +381,6 @@ if (true) {
 /******/ 			module.error = e;
 /******/ 			throw e;
 /******/ 		}
-/******/ 	
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -347,7 +468,7 @@ if (true) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("f682340845726fa285b3")
+/******/ 		__webpack_require__.h = () => ("e3513b8fe85c91f4ffe4")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -421,15 +542,6 @@ if (true) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/node module decorator */
-/******/ 	(() => {
-/******/ 		__webpack_require__.nmd = (module) => {
-/******/ 			module.paths = [];
-/******/ 			if (!module.children) module.children = [];
-/******/ 			return module;
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -1384,9 +1496,9 @@ if (true) {
 /******/ 	// module cache are used so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	__webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-bef483"], () => (__webpack_require__("./node_modules/webpack-dev-server/client/index.js?protocol=ws%3A&hostname=0.0.0.0&port=1300&pathname=%2Fws&logging=info&overlay=true&reconnect=10&hot=true&live-reload=true")))
-/******/ 	__webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-bef483"], () => (__webpack_require__("./node_modules/webpack/hot/dev-server.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-bef483"], () => (__webpack_require__("./src/index.js")))
+/******/ 	__webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-b4cfac"], () => (__webpack_require__("./node_modules/webpack-dev-server/client/index.js?protocol=ws%3A&hostname=0.0.0.0&port=1300&pathname=%2Fws&logging=info&overlay=true&reconnect=10&hot=true&live-reload=true")))
+/******/ 	__webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-b4cfac"], () => (__webpack_require__("./node_modules/webpack/hot/dev-server.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-b4cfac"], () => (__webpack_require__("./src/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
