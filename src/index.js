@@ -38,63 +38,70 @@ const runner = Runner.create();
 Runner.run(runner, engine);
 
 const polygons = [];
+const circles = [];
 const category1 = 0x0001;
 const category2 = 0x0002;
-const circles = [];
-const startFromX = 1002;
-const startFromY = 200;
 const gapY = 45;
 const gapX = 37.5;
-
+const polygonWidth = 37.5;
 const plinkos = 13;
 const ways = plinkos - 2;
-
-for (let i = 0; i < plinkos; i++) {
-  const item = Bodies.rectangle(775 + i * 38, 850, 70, 1, {
-    isStatic: true,
-    angle: Math.PI * 0.5,
-  });
-
-  polygons.push(item);
-}
-
-// polygons.push(
-//   Bodies.rectangle(windowCenter, window.innerHeight, windowCenter, 1, {
-//     isStatic: true,
-//   })
-// );
+const polygonsStartY = window.innerHeight - 100;
+const plinkosStartY = polygonsStartY - 50 - plinkos * gapY;
 
 // plinkos
 for (let i = 0; i < plinkos; i++) {
-  const startY = i * gapY + startFromY;
-  if (i !== 0) {
+  if (i > 1) {
+    const itemY = i * gapY + plinkosStartY;
     const startCountFromX = -i / 2;
     for (let j = 0; j <= i; j++) {
-      const item = Bodies.circle(
-        (startCountFromX + j) * gapX + startFromX,
-        startY,
-        5,
-        {
-          isStatic: true,
-          friction: 1,
-          restitution: 1,
-          density: 1,
-          collisionFilter: {
-            category: category1,
-          },
-          rowIndex: i,
-          label: "plinko",
-          render: {
-            fillStyle: "white",
-            lineWidth: 0,
-          },
-        }
-      );
+      const itemX = (startCountFromX + j) * gapX + windowCenter;
+      const item = Bodies.circle(itemX, itemY, 5, {
+        isStatic: true,
+        friction: 1,
+        restitution: 1,
+        density: 1,
+        collisionFilter: {
+          category: category1,
+        },
+        rowIndex: i,
+        label: "plinko",
+        render: {
+          fillStyle: "white",
+          lineWidth: 0,
+        },
+      });
 
       circles.push(item);
     }
   }
 }
+
+// polygons
+for (let i = 0; i < plinkos; i++) {
+  const itemX =
+    i * polygonWidth -
+    (polygonWidth * plinkos) / 2 +
+    polygonWidth / 2 +
+    windowCenter;
+
+  const item = Bodies.rectangle(itemX, polygonsStartY, 70, 5, {
+    isStatic: true,
+    angle: Math.PI * 0.5,
+    render: {
+      fillStyle: i === Math.floor(plinkos / 2) ? "red" : "white",
+    },
+  });
+
+  polygons.push(item);
+}
+
+polygons.push(
+  Bodies.rectangle(windowCenter, window.innerHeight, window.innerWidth, 1, {
+    isStatic: true,
+    label: "endLine",
+  })
+);
 
 Composite.add(world, circles);
 Composite.add(world, polygons);
@@ -108,6 +115,10 @@ const mouseConstraint = MouseConstraint.create(engine, {
   },
 });
 
+// setInterval(() => {
+//   handlePlink();
+// }, 100);
+
 const handlePlink = () => {
   let resWays = [];
 
@@ -119,7 +130,7 @@ const handlePlink = () => {
 
   Composite.add(
     world,
-    Bodies.circle(1000, 200, 14, {
+    Bodies.circle(windowCenter, plinkosStartY + 50, 14, {
       isStatic: false,
       type: "body",
       friction: 1,
@@ -160,42 +171,45 @@ Events.on(engine, "collisionEnd", function (event) {
 
   for (let i = 0; i < pairs.length; i++) {
     const pair = pairs[i];
-    const { bodyA, bodyB } = pair;
-    let ballBody, plinko;
+    const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
 
-    if (bodyA.label === "ball") {
-      ballBody = bodyA;
-    }
-    if (bodyA.label === "plinko") {
-      plinko = bodyA;
-    }
-    if (bodyB.label === "ball") {
-      ballBody = bodyB;
-    }
-    if (bodyB.label === "plinko") {
-      plinko = bodyB;
+    let ballBody, plinkoBody;
+
+    for (let [key, value] of Object.entries(bodies)) {
+      switch (value.label) {
+        case "ball":
+          ballBody = { ...value };
+          break;
+        case "plinko":
+          plinkoBody = { ...value };
+          break;
+        default:
+          break;
+      }
     }
 
-    if (ballBody && plinko) {
+    if (ballBody && plinkoBody) {
       const angleAbsolute =
-        plinko.position.y - (ballBody.position.y + ballBody.circleRadius) - 3;
+        plinkoBody.position.y -
+        (ballBody.position.y + ballBody.circleRadius) -
+        4;
 
       if (angleAbsolute >= 0) {
         const resWays = ballBody.resWays;
-        const plinkoRow = plinko.rowIndex;
+        const plinkoRow = plinkoBody.rowIndex;
         if (resWays) {
           Body.setVelocity(ballBody, {
-            x: resWays[plinkoRow - 2] === "+" ? 1.5 : -1.5,
-            y: -2,
+            x: resWays[plinkoRow - 2] === "+" ? 1 : -1,
+            y: -2.8,
           });
         }
       }
-      plinko.render.fillStyle = "white";
+      plinkoBody.render.fillStyle = "white";
     }
   }
 });
 
-Render.lookAt(render, Composite.allBodies(world));
+// Render.lookAt(render, Composite.allBodies(world));
 
 Composite.add(world, mouseConstraint);
 
