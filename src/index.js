@@ -41,13 +41,13 @@ const polygons = [];
 const circles = [];
 const category1 = 0x0001;
 const category2 = 0x0002;
-const gapY = 45;
-const gapX = 37.5;
-const polygonWidth = 37.5;
+const gapX = 40;
+const gapY = gapX * 1.125;
 const plinkos = 13;
+const ballWidth = gapX / 2.678;
 const ways = plinkos - 2;
 const polygonsStartY = window.innerHeight - 100;
-const plinkosStartY = polygonsStartY - 50 - plinkos * gapY;
+const plinkosStartY = polygonsStartY - 30 - plinkos * gapY;
 
 // plinkos
 for (let i = 0; i < plinkos; i++) {
@@ -79,18 +79,11 @@ for (let i = 0; i < plinkos; i++) {
 
 // polygons
 for (let i = 0; i < plinkos; i++) {
-  const itemX =
-    i * polygonWidth -
-    (polygonWidth * plinkos) / 2 +
-    polygonWidth / 2 +
-    windowCenter;
+  const itemX = i * gapX - (gapX * plinkos) / 2 + gapX / 2 + windowCenter;
 
-  const item = Bodies.rectangle(itemX, polygonsStartY, 70, 5, {
+  const item = Bodies.rectangle(itemX, polygonsStartY, 70, 3, {
     isStatic: true,
     angle: Math.PI * 0.5,
-    render: {
-      fillStyle: i === Math.floor(plinkos / 2) ? "red" : "white",
-    },
   });
 
   polygons.push(item);
@@ -99,6 +92,7 @@ for (let i = 0; i < plinkos; i++) {
 polygons.push(
   Bodies.rectangle(windowCenter, window.innerHeight, window.innerWidth, 1, {
     isStatic: true,
+    isSensor: true,
     label: "endLine",
   })
 );
@@ -122,7 +116,7 @@ const mouseConstraint = MouseConstraint.create(engine, {
 const handlePlink = () => {
   let resWays = [];
 
-  let result = 6;
+  let result = 10;
 
   for (let i = 0; i < ways; i++) {
     resWays.push(i < result ? "+" : "-");
@@ -130,7 +124,7 @@ const handlePlink = () => {
 
   Composite.add(
     world,
-    Bodies.circle(windowCenter, plinkosStartY + 50, 14, {
+    Bodies.circle(windowCenter, plinkosStartY + 50, ballWidth, {
       isStatic: false,
       type: "body",
       friction: 1,
@@ -182,6 +176,9 @@ Events.on(engine, "collisionEnd", function (event) {
           break;
         case "plinko":
           plinkoBody = { ...value };
+          break;
+        case "endLine":
+          World.remove(world, pair[key === "bodyA" ? "bodyB" : "bodyA"]);
           break;
         default:
           break;

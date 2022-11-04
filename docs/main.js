@@ -65,13 +65,13 @@ var polygons = [];
 var circles = [];
 var category1 = 0x0001;
 var category2 = 0x0002;
-var gapY = 45;
-var gapX = 37.5;
-var polygonWidth = 37.5;
+var gapX = 40;
+var gapY = gapX * 1.125;
 var plinkos = 13;
+var ballWidth = gapX / 2.678;
 var ways = plinkos - 2;
 var polygonsStartY = window.innerHeight - 100;
-var plinkosStartY = polygonsStartY - 50 - plinkos * gapY; // plinkos
+var plinkosStartY = polygonsStartY - 30 - plinkos * gapY; // plinkos
 
 for (var i = 0; i < plinkos; i++) {
   if (i > 1) {
@@ -102,14 +102,11 @@ for (var i = 0; i < plinkos; i++) {
 
 
 for (var _i = 0; _i < plinkos; _i++) {
-  var _itemX = _i * polygonWidth - polygonWidth * plinkos / 2 + polygonWidth / 2 + windowCenter;
+  var _itemX = _i * gapX - gapX * plinkos / 2 + gapX / 2 + windowCenter;
 
-  var _item = Bodies.rectangle(_itemX, polygonsStartY, 70, 5, {
+  var _item = Bodies.rectangle(_itemX, polygonsStartY, 70, 3, {
     isStatic: true,
-    angle: Math.PI * 0.5,
-    render: {
-      fillStyle: _i === Math.floor(plinkos / 2) ? "red" : "white"
-    }
+    angle: Math.PI * 0.5
   });
 
   polygons.push(_item);
@@ -117,6 +114,7 @@ for (var _i = 0; _i < plinkos; _i++) {
 
 polygons.push(Bodies.rectangle(windowCenter, window.innerHeight, window.innerWidth, 1, {
   isStatic: true,
+  isSensor: true,
   label: "endLine"
 }));
 Composite.add(world, circles);
@@ -134,13 +132,13 @@ var mouseConstraint = MouseConstraint.create(engine, {
 
 var handlePlink = function handlePlink() {
   var resWays = [];
-  var result = 6;
+  var result = 10;
 
   for (var _i2 = 0; _i2 < ways; _i2++) {
     resWays.push(_i2 < result ? "+" : "-");
   }
 
-  Composite.add(world, Bodies.circle(windowCenter, plinkosStartY + 50, 14, {
+  Composite.add(world, Bodies.circle(windowCenter, plinkosStartY + 50, ballWidth, {
     isStatic: false,
     type: "body",
     friction: 1,
@@ -194,6 +192,10 @@ Events.on(engine, "collisionEnd", function (event) {
 
         case "plinko":
           plinkoBody = _objectSpread({}, value);
+          break;
+
+        case "endLine":
+          matter_js__WEBPACK_IMPORTED_MODULE_0__.World.remove(world, pair[key === "bodyA" ? "bodyB" : "bodyA"]);
           break;
 
         default:
@@ -498,7 +500,7 @@ if (true) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("59778cccec880b146967")
+/******/ 		__webpack_require__.h = () => ("2c90841853af910226e3")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
