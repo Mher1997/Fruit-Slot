@@ -1,4 +1,5 @@
 import Matter, { Body, World } from "matter-js";
+import { shuffle } from "./helpers";
 import "./index.scss";
 
 const windowCenter = window.innerWidth / 2;
@@ -11,7 +12,6 @@ const Engine = Matter.Engine,
   Events = Matter.Events,
   Mouse = Matter.Mouse,
   Composite = Matter.Composite,
-  Composites = Matter.Composites,
   MouseConstraint = Matter.MouseConstraint;
 
 // create an engine
@@ -37,13 +37,14 @@ Render.run(render);
 const runner = Runner.create();
 Runner.run(runner, engine);
 
+let result = 9;
 const polygons = [];
 const circles = [];
 const category1 = 0x0001;
 const category2 = 0x0002;
 const gapX = 40;
 const gapY = gapX * 1.125;
-const plinkos = 13;
+const plinkos = 14;
 const ballWidth = gapX / 2.678;
 const ways = plinkos - 2;
 const polygonsStartY = window.innerHeight - 100;
@@ -109,14 +110,8 @@ const mouseConstraint = MouseConstraint.create(engine, {
   },
 });
 
-// setInterval(() => {
-//   handlePlink();
-// }, 100);
-
 const handlePlink = () => {
   let resWays = [];
-
-  let result = 10;
 
   for (let i = 0; i < ways; i++) {
     resWays.push(i < result ? "+" : "-");
@@ -148,16 +143,31 @@ Events.on(mouseConstraint, "mousedown", handlePlink);
 
 Events.on(engine, "collisionStart", function (event) {
   const pairs = event.pairs;
-  const { bodyA } = pairs[0];
 
-  bodyA.render.fillStyle = "#13bccf";
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i];
+    const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
+
+    for (let [key, value] of Object.entries(bodies)) {
+      if (value.label === "plinko") {
+        value.render.fillStyle = "red";
+      }
+    }
+  }
 });
 
 Events.on(engine, "collisionActive", function (event) {
   const pairs = event.pairs;
-  const { bodyA } = pairs[0];
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i];
+    const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
 
-  bodyA.render.fillStyle = "#13bccf";
+    for (let [key, value] of Object.entries(bodies)) {
+      if (value.label === "plinko") {
+        value.render.fillStyle = "red";
+      }
+    }
+  }
 });
 
 Events.on(engine, "collisionEnd", function (event) {
@@ -206,28 +216,8 @@ Events.on(engine, "collisionEnd", function (event) {
   }
 });
 
-// Render.lookAt(render, Composite.allBodies(world));
+Render.lookAt(render, Composite.allBodies(world));
 
 Composite.add(world, mouseConstraint);
 
 render.mouse = mouse;
-
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-
-  return array;
-}

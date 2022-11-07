@@ -2,6 +2,96 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/helpers.js":
+/*!************************!*\
+  !*** ./src/helpers.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getPairs": () => (/* binding */ getPairs),
+/* harmony export */   "shuffle": () => (/* binding */ shuffle)
+/* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var shuffle = function shuffle(array) {
+  var currentIndex = array.length,
+      randomIndex; // While there remain elements to shuffle.
+
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--; // And swap it with the current element.
+
+    var _ref = [array[randomIndex], array[currentIndex]];
+    array[currentIndex] = _ref[0];
+    array[randomIndex] = _ref[1];
+  }
+
+  return array;
+};
+var getPairs = function getPairs(pairs, callback) {
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    var bodies = {
+      bodyA: _objectSpread({}, pair.bodyA),
+      bodyB: _objectSpread({}, pair.bodyB)
+    };
+    var ballBody = void 0,
+        plinkoBody = void 0,
+        endLineBody = void 0;
+
+    for (var _i = 0, _Object$entries = Object.entries(bodies); _i < _Object$entries.length; _i++) {
+      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+          key = _Object$entries$_i[0],
+          value = _Object$entries$_i[1];
+
+      switch (value.label) {
+        case "ball":
+          ballBody = _objectSpread({}, value);
+          break;
+
+        case "plinko":
+          plinkoBody = _objectSpread({}, value);
+          break;
+
+        case "endLine":
+          World.remove(world, pair[key === "bodyA" ? "bodyB" : "bodyA"]);
+          endLineBody = _objectSpread({}, value);
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    return {
+      ballBody: ballBody,
+      plinkoBody: plinkoBody,
+      endLineBody: endLineBody
+    };
+  }
+};
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -11,7 +101,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var matter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! matter-js */ "./node_modules/matter-js/build/matter.js");
 /* harmony import */ var matter_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(matter_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.scss */ "./src/index.scss");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./src/helpers.js");
+/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.scss */ "./src/index.scss");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -32,6 +123,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var windowCenter = window.innerWidth / 2; // module aliases
 
 var Engine = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Engine),
@@ -41,7 +133,6 @@ var Engine = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Engine),
     Events = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Events),
     Mouse = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Mouse),
     Composite = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Composite),
-    Composites = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().Composites),
     MouseConstraint = (matter_js__WEBPACK_IMPORTED_MODULE_0___default().MouseConstraint); // create an engine
 
 var engine = Engine.create();
@@ -61,13 +152,14 @@ world.gravity.y = 1.6; // run the renderer
 Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
+var result = 9;
 var polygons = [];
 var circles = [];
 var category1 = 0x0001;
 var category2 = 0x0002;
 var gapX = 40;
 var gapY = gapX * 1.125;
-var plinkos = 13;
+var plinkos = 14;
 var ballWidth = gapX / 2.678;
 var ways = plinkos - 2;
 var polygonsStartY = window.innerHeight - 100;
@@ -126,13 +218,10 @@ var mouseConstraint = MouseConstraint.create(engine, {
   constraint: {
     stiffness: 0.2
   }
-}); // setInterval(() => {
-//   handlePlink();
-// }, 100);
+});
 
 var handlePlink = function handlePlink() {
   var resWays = [];
-  var result = 10;
 
   for (var _i2 = 0; _i2 < ways; _i2++) {
     resWays.push(_i2 < result ? "+" : "-");
@@ -145,7 +234,7 @@ var handlePlink = function handlePlink() {
     restitution: 0.8,
     density: 0.1,
     label: "ball",
-    resWays: shuffle(resWays),
+    resWays: (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.shuffle)(resWays),
     collisionFilter: {
       mask: category1,
       category: category2
@@ -160,16 +249,6 @@ var handlePlink = function handlePlink() {
 Events.on(mouseConstraint, "mousedown", handlePlink);
 Events.on(engine, "collisionStart", function (event) {
   var pairs = event.pairs;
-  var bodyA = pairs[0].bodyA;
-  bodyA.render.fillStyle = "#13bccf";
-});
-Events.on(engine, "collisionActive", function (event) {
-  var pairs = event.pairs;
-  var bodyA = pairs[0].bodyA;
-  bodyA.render.fillStyle = "#13bccf";
-});
-Events.on(engine, "collisionEnd", function (event) {
-  var pairs = event.pairs;
 
   for (var _i3 = 0; _i3 < pairs.length; _i3++) {
     var pair = pairs[_i3];
@@ -177,13 +256,55 @@ Events.on(engine, "collisionEnd", function (event) {
       bodyA: _objectSpread({}, pair.bodyA),
       bodyB: _objectSpread({}, pair.bodyB)
     };
-    var ballBody = void 0,
-        plinkoBody = void 0;
 
     for (var _i4 = 0, _Object$entries = Object.entries(bodies); _i4 < _Object$entries.length; _i4++) {
       var _Object$entries$_i = _slicedToArray(_Object$entries[_i4], 2),
           key = _Object$entries$_i[0],
           value = _Object$entries$_i[1];
+
+      if (value.label === "plinko") {
+        value.render.fillStyle = "red";
+      }
+    }
+  }
+});
+Events.on(engine, "collisionActive", function (event) {
+  var pairs = event.pairs;
+
+  for (var _i5 = 0; _i5 < pairs.length; _i5++) {
+    var pair = pairs[_i5];
+    var bodies = {
+      bodyA: _objectSpread({}, pair.bodyA),
+      bodyB: _objectSpread({}, pair.bodyB)
+    };
+
+    for (var _i6 = 0, _Object$entries2 = Object.entries(bodies); _i6 < _Object$entries2.length; _i6++) {
+      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i6], 2),
+          key = _Object$entries2$_i[0],
+          value = _Object$entries2$_i[1];
+
+      if (value.label === "plinko") {
+        value.render.fillStyle = "red";
+      }
+    }
+  }
+});
+Events.on(engine, "collisionEnd", function (event) {
+  var pairs = event.pairs;
+
+  for (var _i7 = 0; _i7 < pairs.length; _i7++) {
+    var pair = pairs[_i7];
+    var bodies = {
+      bodyA: _objectSpread({}, pair.bodyA),
+      bodyB: _objectSpread({}, pair.bodyB)
+    };
+    var ballBody = void 0,
+        plinkoBody = void 0;
+
+    for (var _i8 = 0, _Object$entries3 = Object.entries(bodies); _i8 < _Object$entries3.length; _i8++) {
+      var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i8], 2),
+          key = _Object$entries3$_i[0],
+          value = _Object$entries3$_i[1];
 
       switch (value.label) {
         case "ball":
@@ -221,27 +342,10 @@ Events.on(engine, "collisionEnd", function (event) {
       plinkoBody.render.fillStyle = "white";
     }
   }
-}); // Render.lookAt(render, Composite.allBodies(world));
-
+});
+Render.lookAt(render, Composite.allBodies(world));
 Composite.add(world, mouseConstraint);
 render.mouse = mouse;
-
-function shuffle(array) {
-  var currentIndex = array.length,
-      randomIndex; // While there remain elements to shuffle.
-
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--; // And swap it with the current element.
-
-    var _ref = [array[randomIndex], array[currentIndex]];
-    array[currentIndex] = _ref[0];
-    array[randomIndex] = _ref[1];
-  }
-
-  return array;
-}
 
 /***/ }),
 
@@ -500,7 +604,7 @@ if (true) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("2c90841853af910226e3")
+/******/ 		__webpack_require__.h = () => ("37b78181477e0ce7bd55")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
