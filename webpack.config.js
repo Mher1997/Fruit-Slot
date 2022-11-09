@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const { ProvidePlugin } = require("webpack");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -14,6 +15,9 @@ const pluginsConfig = [
   }),
   new CopyPlugin({
     patterns: [{ from: "./src/assets" }],
+  }),
+  new ProvidePlugin({
+    PIXI: "pixi.js",
   }),
 ];
 

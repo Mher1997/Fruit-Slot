@@ -45,3 +45,11 @@ export const getPairs = (pairs, callback) => {
     return { ballBody, plinkoBody, endLineBody };
   }
 };
+
+export const resultAction = (() => {
+  let result = "Random";
+  return {
+    get: () => result,
+    change: (value) => (result = value),
+  };
+})();
