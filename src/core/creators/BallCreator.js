@@ -57,7 +57,7 @@ class BallCreator extends PlinkoCreator {
     const { app, plinkosStartY, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter, plinkosStartY - 100];
+    const [x, y] = [this.sceneContainerCenter, plinkosStartY - 50];
 
     button.beginFill(0xde3249);
     button.drawCircle(x, y, 50);

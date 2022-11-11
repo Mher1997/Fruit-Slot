@@ -11,7 +11,7 @@ window.__PIXI_INSPECTOR_GLOBAL_HOOK__ &&
   window.__PIXI_INSPECTOR_GLOBAL_HOOK__.register({ PIXI: PIXI });
 
 document.addEventListener("DOMContentLoaded", () => {
-  new AppInit(40, 13, 3);
+  new AppInit(40, 10, 3);
   new PlinkosCreator().init();
   new SeparatesCreator().init();
   new DeadLineCreator().init();

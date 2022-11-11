@@ -2,10 +2,6 @@ import { Graphics } from "pixi.js";
 import BallCreator from "../../core/creators/BallCreator";
 
 class BallCircle extends BallCreator {
-  constructor() {
-    super();
-  }
-
   init() {
     const { app, plinkosStartY, sceneContainerCenter, gapY, ballRadius } = this;
     const graphics = new Graphics();

@@ -5,6 +5,7 @@ import "../index.scss";
 const Engine = Matter.Engine,
   World = Matter.World,
   Body = Matter.Body,
+  Render = Matter.Render,
   Runner = Matter.Runner,
   Bodies = Matter.Bodies,
   Events = Matter.Events,
@@ -15,10 +16,22 @@ const sceneContainer = document.body;
 const app = new PIXI.Application({
   resizeTo: sceneContainer,
   backgroundColor: 0x04293a,
+  autoResize: true,
 });
 
 const engine = Engine.create();
 const sceneObjects = [];
+
+// const render = Render.create({
+//   element: sceneContainer,
+//   engine: engine,
+//   options: {
+//     width: sceneContainer.clientWidth,
+//     height: sceneContainer.clientHeight,
+//   },
+// });
+
+// Render.run(render);
 
 class AppInit {
   constructor(gapX, length, result) {
@@ -50,13 +63,6 @@ class AppInit {
       Runner.run(engine);
 
       this.handleAddTicker();
-
-      const graphics = new PIXI.Graphics();
-      graphics.lineStyle(0);
-      graphics.beginFill(0x99feff, 1);
-      graphics.drawCircle(200, 200, 10);
-
-      app.stage.addChild(graphics);
     }
   }
 

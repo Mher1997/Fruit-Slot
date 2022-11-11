@@ -11,7 +11,7 @@ const DeadLine = (options) => {
   });
 
   const graphics = new Graphics();
-  graphics.beginFill(0xde3249);
+  graphics.beginFill(0x04293a);
   graphics.drawRect(x, y, width, height);
   graphics.endFill();
 

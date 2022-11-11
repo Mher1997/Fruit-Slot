@@ -2,7 +2,7 @@ import { Graphics, Text } from "pixi.js";
 import Separate from "../../components/separate";
 import { resultAction } from "../helpers";
 import PlinkoCreator from "./PlinkosCreator";
-import TextCreator from "./TextCreator";
+import ResultTextCreator from "./ResultTextCreator";
 
 class SeparatesCreator extends PlinkoCreator {
   init() {
@@ -11,7 +11,6 @@ class SeparatesCreator extends PlinkoCreator {
       gapX,
       length,
       sceneContainerCenter,
-      sceneContainerHeight,
       sceneContainerWidth,
       polygonsStartY,
       world,
@@ -95,8 +94,9 @@ class SeparatesCreator extends PlinkoCreator {
     chooseBoxText.y = polygonsStartY + 35;
     chooseBoxText.anchor.set(0.5, 0.5);
 
-    const width = 1;
-    const height = 70;
+    const width = 36;
+    const height = 20;
+    const y = polygonsStartY - 50;
 
     const handleChangeResult = () => {
       const result = resultAction.get();
@@ -108,26 +108,25 @@ class SeparatesCreator extends PlinkoCreator {
       resultText.text = result + 1;
     };
 
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length - 1; i++) {
       const itemX =
         i * gapX - (gapX * length) / 2 + gapX / 2 + sceneContainerCenter;
 
-      const { body, graphics } = Separate({
-        x: itemX,
-        y: polygonsStartY,
-        width,
-        height,
-      });
-
-      new TextCreator().init(
-        itemX,
-        polygonsStartY,
-        height,
+      const { body, graphics } = Separate(
+        {
+          x: itemX + (gapX - width) / 2,
+          y: y - height / 2,
+          width,
+          height,
+        },
         i,
         handleChangeResult
       );
+
       app.stage.addChild(graphics);
       World.addBody(world, body);
+
+      new ResultTextCreator().init(itemX + 20, y, i);
     }
 
     app.stage.addChild(
