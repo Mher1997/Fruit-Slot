@@ -43,7 +43,7 @@ class SeparatesCreator extends PlinkoCreator {
     randomModeBox.lineStyle(1, 0x393e46, 1);
     randomModeBox.drawRect(
       sceneContainerWidth - 350,
-      polygonsStartY + 10,
+      polygonsStartY - 75,
       300,
       50
     );
@@ -72,7 +72,7 @@ class SeparatesCreator extends PlinkoCreator {
       strokeThickness: 4,
     });
     randomModeText.x = sceneContainerWidth - 200;
-    randomModeText.y = polygonsStartY + 35;
+    randomModeText.y = polygonsStartY - 50;
     randomModeText.anchor.set(0.5, 0.5);
 
     const chooseBoxText = new Text("Choose the box", {
@@ -91,7 +91,7 @@ class SeparatesCreator extends PlinkoCreator {
       strokeThickness: 12,
     });
     chooseBoxText.x = 200;
-    chooseBoxText.y = polygonsStartY + 35;
+    chooseBoxText.y = polygonsStartY - 50;
     chooseBoxText.anchor.set(0.5, 0.5);
 
     const width = 36;
