@@ -11,8 +11,9 @@ class SeparatesCreator extends PlinkoCreator {
       gapX,
       length,
       plinkWidth,
+      plinkosStartY,
       sceneContainerCenter,
-      polygonsStartY,
+      gapY,
       world,
       World,
     } = this;
@@ -23,7 +24,7 @@ class SeparatesCreator extends PlinkoCreator {
     resultText.anchor.set(0.5, 0.5);
 
     const width = 36;
-    const height = 20;
+    const height = 28;
 
     const handleChangeResult = () => {
       const result = resultAction.get();
@@ -45,7 +46,7 @@ class SeparatesCreator extends PlinkoCreator {
         (gapX * length) / 2 +
         gapX +
         plinkWidth / 2;
-      const y = polygonsStartY - height / 2 - 30;
+      const y = length * gapY + plinkosStartY - 10;
       const category = Math.abs(Math.ceil(i + 1 - length / 2)) || 1;
 
       const { body, graphics } = Separate({

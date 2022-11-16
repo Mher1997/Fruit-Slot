@@ -9,7 +9,9 @@ class CloudGraphic extends BallCreator {
     const { cloudTexture } = loadGameAssets;
 
     const graphics = Sprite.from(cloudTexture);
-    graphics.y = plinkosStartY;
+    graphics.width = 250;
+    graphics.height = 180;
+    graphics.y = plinkosStartY - 20;
     graphics.x = sceneContainerCenter;
     graphics.anchor.set(0.5, 0.5);
     graphics.zIndex = 2;

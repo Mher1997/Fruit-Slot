@@ -22,9 +22,11 @@ class BallCreator extends PlinkoCreator {
       plinkoCategory,
       sceneContainerCenter,
       addSceneObject,
-      ballTexture,
       World,
     } = this;
+
+    const ballType = Math.floor(Math.random() * 3) + 1;
+    const ball = Assets.get(`ballTexture-${ballType}`);
 
     let resWays = [];
     let result =
@@ -38,9 +40,9 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: plinkosStartY + 50,
+      y: plinkosStartY + 30,
       resWays,
-      texture: ballTexture,
+      texture: ball,
       radius: ballRadius,
       category: ballCategory,
       mask: plinkoCategory,
@@ -56,10 +58,10 @@ class BallCreator extends PlinkoCreator {
   };
 
   renderButton = () => {
-    const { Container, polygonsStartY, handlePlink } = this;
+    const { Container, plinkosStartY, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter + 500, polygonsStartY - 300];
+    const [x, y] = [this.sceneContainerCenter + 300, plinkosStartY + 100];
 
     button.beginFill(0xde3249);
     button.drawCircle(x, y, 50);
@@ -100,11 +102,6 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    const loadGameAssets = await Assets.loadBundle("game-screen");
-    const { ballTexture } = loadGameAssets;
-
-    this.ballTexture = ballTexture;
-
     this.renderButton();
   }
 }

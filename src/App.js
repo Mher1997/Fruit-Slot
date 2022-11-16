@@ -18,7 +18,7 @@ const app = new PIXI.Application({
   autoResize: true,
   resizeTo: window,
   width: sceneContainer.clientWidth,
-  height: sceneContainer.clientHeight,
+  height: sceneContainer.clientWidth * 1.04,
   // backgroundColor: 0x000d27,
 });
 
@@ -107,15 +107,22 @@ class AppInit {
     handleAddTicker();
 
     const background = PIXI.Sprite.from(loadScreenAssets.background);
+    const backgroundDetail = PIXI.Sprite.from(
+      loadScreenAssets.backgroundDetail
+    );
+
     background.width = sceneContainerWidth;
     background.height = sceneContainerHeight;
+    backgroundDetail.width = sceneContainerWidth;
+    backgroundDetail.height = sceneContainerHeight;
 
     Container.addChild(background);
+    Container.addChild(backgroundDetail);
     app.stage.addChild(Container);
 
     window.addEventListener("resize", () => {
       Container.width = sceneContainer.clientWidth;
-      Container.height = sceneContainer.clientHeight;
+      Container.height = sceneContainer.clientWidth * 1.04;
     });
   }
 }

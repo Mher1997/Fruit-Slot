@@ -6,6 +6,10 @@
         {
           "name": "background",
           "srcs": "images/background.png"
+        },
+        {
+          "name": "backgroundDetail",
+          "srcs": "images/background-details.png"
         }
       ]
     },
@@ -13,12 +17,20 @@
       "name": "game-screen",
       "assets": [
         {
-          "name": "cloudTexture",
-          "srcs": "images/cloud.png"
+          "name": "ballTexture-1",
+          "srcs": "images/balls/ball-1.png"
         },
         {
-          "name": "ballTexture",
-          "srcs": "images/ball.png"
+          "name": "ballTexture-2",
+          "srcs": "images/balls/ball-2.png"
+        },
+        {
+          "name": "ballTexture-3",
+          "srcs": "images/balls/ball-3.png"
+        },
+        {
+          "name": "cloudTexture",
+          "srcs": "images/cloud.png"
         },
         {
           "name": "plinkTexture",

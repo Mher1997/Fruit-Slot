@@ -8,7 +8,7 @@ class PlinkosCreator extends AppInit {
     this.gapY = this.gapX * 1.125;
     this.plinkoCategory = 0x0001;
     this.polygonsStartY = this.sceneContainerHeight;
-    this.plinkosStartY = this.polygonsStartY - 30 - this.length * this.gapY;
+    this.plinkosStartY = 150;
   }
 
   async init() {
