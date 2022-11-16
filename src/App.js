@@ -12,6 +12,7 @@ const Engine = Matter.Engine,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint;
 
+//PIXI app
 const sceneContainer = document.body;
 const app = new PIXI.Application({
   autoResize: true,
@@ -27,6 +28,7 @@ const sceneObjects = [];
 const container = new PIXI.Container();
 container.sortableChildren = true;
 
+//Matter app
 // const render = Render.create({
 //   element: sceneContainer,
 //   engine: engine,
@@ -35,7 +37,6 @@ container.sortableChildren = true;
 //     height: sceneContainer.clientHeight,
 //   },
 // });
-
 // Render.run(render);
 
 class AppInit {
@@ -61,6 +62,7 @@ class AppInit {
     this.Events = Events;
     this.MouseConstraint = MouseConstraint;
     this.Container = container;
+    this.plinkWidth = 5;
 
     if (!AppInit._instance) {
       this.init();
@@ -106,6 +108,11 @@ class AppInit {
 
     Container.addChild(background);
     app.stage.addChild(Container);
+
+    window.addEventListener("resize", () => {
+      Container = sceneContainer.clientWidth;
+      Container = sceneContainer.clientHeight;
+    });
   }
 }
 

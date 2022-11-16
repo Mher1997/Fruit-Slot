@@ -16,6 +16,7 @@ class PlinkosCreator extends AppInit {
       gapX,
       gapY,
       length,
+      plinkWidth,
       plinkoCategory,
       plinkosStartY,
       sceneContainerCenter,
@@ -43,8 +44,9 @@ class PlinkosCreator extends AppInit {
           const { body, graphics } = Plink({
             x: itemX,
             y: itemY,
-            radius: 5,
             rowIndex: i,
+            radius: plinkWidth,
+            graphicKey: `${i}-${j}`,
             category: plinkoCategory,
             texture: plinkTexture,
           });

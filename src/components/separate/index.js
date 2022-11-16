@@ -15,7 +15,7 @@ const Separate = (options) => {
   const graphics = Sprite.from(texture);
   graphics.x = x;
   graphics.y = y;
-  graphics.anchor.set(0.5);
+  graphics.anchor.set(0.5, 0.5);
   graphics.width = width;
   graphics.zIndex = 2;
 

@@ -10,6 +10,7 @@ class SeparatesCreator extends PlinkoCreator {
       Container,
       gapX,
       length,
+      plinkWidth,
       sceneContainerCenter,
       polygonsStartY,
       world,
@@ -39,7 +40,12 @@ class SeparatesCreator extends PlinkoCreator {
 
     for (let i = 0; i < length - 1; i++) {
       const graphicKey = `result-${i + 1}`;
-      const x = i * gapX + sceneContainerCenter - (gapX * length) / 2 + gapX;
+      const x =
+        i * gapX +
+        sceneContainerCenter -
+        (gapX * length) / 2 +
+        gapX +
+        plinkWidth / 2;
       const y = polygonsStartY - height / 2 - 30;
 
       const { body, graphics } = Separate({

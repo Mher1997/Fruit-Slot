@@ -1,5 +1,6 @@
 import AppInit from "../App";
 import TWEEN from "@tweenjs/tween.js";
+import { Assets } from "pixi.js";
 class EventsListeners extends AppInit {
   constructor() {
     super();
@@ -21,6 +22,7 @@ class EventsListeners extends AppInit {
 
     Events.on(engine, "collisionStart", function (event) {
       const pairs = event.pairs;
+      const plinkActiveTexture = Assets.get("plinkActiveTexture");
 
       for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
@@ -41,8 +43,11 @@ class EventsListeners extends AppInit {
               if (!separateGraphic?.isActiveAnimation) {
                 textResultAnimate(separateGraphic);
               }
-
               break;
+            case "plink":
+              const plinkoGraphic = getGraphicByBodyKey(value);
+              plinkoGraphic.texture = plinkActiveTexture;
+              plinkoGraphic.scale.set(1);
             default:
               break;
           }
@@ -52,6 +57,7 @@ class EventsListeners extends AppInit {
 
     Events.on(engine, "collisionEnd", function (event) {
       const pairs = event.pairs;
+      const plinkTexture = Assets.get("plinkTexture");
 
       for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
@@ -67,6 +73,8 @@ class EventsListeners extends AppInit {
               break;
             case "plink":
               plinkBody = { ...value };
+              const plinkoGraphic = getGraphicByBodyKey(value);
+              plinkoGraphic.texture = plinkTexture;
               break;
             default:
               break;
@@ -75,7 +83,6 @@ class EventsListeners extends AppInit {
 
         if (ballBody && plinkBody) {
           handleCollisionBall(ballBody, plinkBody);
-          const plinkoGraphic = getGraphicByBodyKey(plinkBody);
         }
       }
     });
@@ -85,7 +92,6 @@ class EventsListeners extends AppInit {
     const { Container } = this;
     const bodyValue = body[key];
     const graphic = Container.children.find((item) => item[key] === bodyValue);
-
     return graphic;
   };
 

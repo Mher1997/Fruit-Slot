@@ -23,11 +23,11 @@ const PlinkoBall = (options) => {
   });
 
   const graphics = Sprite.from(texture);
-  graphics.width = radius * Math.PI + 6;
-  graphics.height = radius * Math.PI + 6;
+  graphics.width = radius * 3.14 + 5;
+  graphics.height = radius * 3.14 + 5;
   graphics.graphicKey = graphicKey;
-  graphics.anchor.set(0.5);
   graphics.zIndex = 1;
+  graphics.anchor.set(0.5, 0.5);
 
   graphicKey++;
 
