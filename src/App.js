@@ -121,8 +121,8 @@ class AppInit {
     app.stage.addChild(Container);
 
     window.addEventListener("resize", () => {
-      Container.width = sceneContainer.clientWidth;
-      Container.height = sceneContainer.clientWidth * 1.04;
+      app.stage.width = window.innerWidth;
+      app.stage.height = window.innerHeight;
     });
   }
 }
