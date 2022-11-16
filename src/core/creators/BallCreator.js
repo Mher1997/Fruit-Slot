@@ -1,6 +1,6 @@
+import { Assets, Graphics, Text, TextStyle } from "pixi.js";
 import PlinkoBall from "../../components/plinkoBall";
 import PlinkoCreator from "./PlinkosCreator";
-import { Graphics, Text, TextStyle } from "pixi.js";
 import { resultAction } from "../helpers";
 
 class BallCreator extends PlinkoCreator {
@@ -13,7 +13,7 @@ class BallCreator extends PlinkoCreator {
 
   handlePlink = () => {
     const {
-      app,
+      Container,
       ways,
       world,
       ballRadius,
@@ -22,6 +22,7 @@ class BallCreator extends PlinkoCreator {
       plinkoCategory,
       sceneContainerCenter,
       addSceneObject,
+      ballTexture,
       World,
     } = this;
 
@@ -39,12 +40,13 @@ class BallCreator extends PlinkoCreator {
       x: sceneContainerCenter,
       y: plinkosStartY + 50,
       resWays,
+      texture: ballTexture,
       radius: ballRadius,
       category: ballCategory,
       mask: plinkoCategory,
     });
 
-    app.stage.addChild(graphics);
+    Container.addChild(graphics);
     World.addBody(world, body);
 
     addSceneObject({
@@ -54,16 +56,17 @@ class BallCreator extends PlinkoCreator {
   };
 
   renderButton = () => {
-    const { app, plinkosStartY, handlePlink } = this;
+    const { Container, polygonsStartY, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter, plinkosStartY - 50];
+    const [x, y] = [this.sceneContainerCenter + 500, polygonsStartY - 300];
 
     button.beginFill(0xde3249);
     button.drawCircle(x, y, 50);
     button.endFill();
     button.interactive = true;
     button.cursor = "pointer";
+    button.zIndex = 1;
 
     const style = new TextStyle({
       fontFamily: "Arial",
@@ -83,19 +86,25 @@ class BallCreator extends PlinkoCreator {
       lineJoin: "round",
     });
 
-    const buttonText = new Text("Plink", style);
+    const buttonText = new Text("Bet", style);
     buttonText.x = x;
     buttonText.y = y;
     buttonText.anchor.set(0.5, 0.5);
+    buttonText.zIndex = 5;
 
     button.on("pointerdown", () => {
       handlePlink();
     });
 
-    app.stage.addChild(button, buttonText);
+    Container.addChild(button, buttonText);
   };
 
-  init() {
+  async init() {
+    const loadGameAssets = await Assets.loadBundle("game-screen");
+    const { ballTexture } = loadGameAssets;
+
+    this.ballTexture = ballTexture;
+
     this.renderButton();
   }
 }

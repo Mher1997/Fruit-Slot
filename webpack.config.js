@@ -16,9 +16,9 @@ const pluginsConfig = [
   new CopyPlugin({
     patterns: [{ from: "./src/assets" }],
   }),
-  new ProvidePlugin({
-    PIXI: "pixi.js",
-  }),
+  // new ProvidePlugin({
+  //   PIXI: "pixi.js",
+  // }),
 ];
 
 if (!isDevelopment) {
@@ -56,7 +56,7 @@ module.exports = {
     },
     devMiddleware: {
       index: "index.html",
-      writeToDisk: true,
+      // writeToDisk: true,
     },
   },
   module: {

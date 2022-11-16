@@ -1,106 +1,32 @@
-import { Graphics, Text } from "pixi.js";
-import Separate from "../../components/separate";
-import { resultAction } from "../helpers";
+import { Assets, Text } from "pixi.js";
 import PlinkoCreator from "./PlinkosCreator";
-import ResultTextCreator from "./ResultTextCreator";
+import Separate from "../../components/separate/";
+import SeparateText from "../../components/separateText";
+import { resultAction } from "../helpers";
 
 class SeparatesCreator extends PlinkoCreator {
-  init() {
+  async init() {
     const {
-      app,
+      Container,
       gapX,
       length,
       sceneContainerCenter,
-      sceneContainerWidth,
       polygonsStartY,
       world,
       World,
     } = this;
-
-    const resultBox = new Graphics();
-    resultBox.beginFill(0xffffff);
-    resultBox.drawRect(100, 100, 200, 50);
-    resultBox.endFill();
 
     const resultText = new Text(resultAction.get());
     resultText.x = 200;
     resultText.y = 125;
     resultText.anchor.set(0.5, 0.5);
 
-    const modeText = new Text("Mode", {
-      fontFamily: "Arial",
-      fill: ["#ffffff"],
-      stroke: "#004620",
-      fontSize: 22,
-      fontWeight: "lighter",
-    });
-    modeText.x = 200;
-    modeText.y = 70;
-    modeText.anchor.set(0.5, 0.5);
-
-    const randomModeBox = new Graphics();
-    randomModeBox.beginFill(0x04293a);
-    randomModeBox.lineStyle(1, 0x393e46, 1);
-    randomModeBox.drawRect(
-      sceneContainerWidth - 350,
-      polygonsStartY - 75,
-      300,
-      50
-    );
-    randomModeBox.endFill();
-    randomModeBox.interactive = true;
-    randomModeBox.cursor = "pointer";
-
-    randomModeBox.on("pointerdown", (e) => {
-      resultAction.change("Random");
-      resultText.text = resultAction.get();
-      app.stage.children.forEach((item) => {
-        if (item.label === "text-result") {
-          item.style.fontSize = 14;
-        }
-      });
-    });
-
-    const randomModeText = new Text("Switch to random mode", {
-      fontFamily: "Arial",
-      dropShadowColor: "0x111111",
-      fill: ["#ffffff"],
-      stroke: "#0008C1",
-      fontSize: 20,
-      fontWeight: "lighter",
-      lineJoin: "round",
-      strokeThickness: 4,
-    });
-    randomModeText.x = sceneContainerWidth - 200;
-    randomModeText.y = polygonsStartY - 50;
-    randomModeText.anchor.set(0.5, 0.5);
-
-    const chooseBoxText = new Text("Choose the box", {
-      fontFamily: "Arial",
-      dropShadow: true,
-      dropShadowAlpha: 0.8,
-      dropShadowAngle: 2.1,
-      dropShadowBlur: 4,
-      dropShadowColor: "0x111111",
-      dropShadowDistance: 10,
-      fill: ["#ffffff"],
-      stroke: "#004620",
-      fontSize: 40,
-      fontWeight: "lighter",
-      lineJoin: "round",
-      strokeThickness: 12,
-    });
-    chooseBoxText.x = 200;
-    chooseBoxText.y = polygonsStartY - 50;
-    chooseBoxText.anchor.set(0.5, 0.5);
-
     const width = 36;
     const height = 20;
-    const y = polygonsStartY - 50;
 
     const handleChangeResult = () => {
       const result = resultAction.get();
-      app.stage.children.forEach((item) => {
+      Container.children.forEach((item) => {
         if (item.label === "text-result") {
           item.style.fontSize = 14;
         }
@@ -108,35 +34,34 @@ class SeparatesCreator extends PlinkoCreator {
       resultText.text = result + 1;
     };
 
+    const loadGameAssets = await Assets.loadBundle("game-screen");
+    const { separate1Texture } = loadGameAssets;
+
     for (let i = 0; i < length - 1; i++) {
-      const itemX =
-        i * gapX - (gapX * length) / 2 + gapX / 2 + sceneContainerCenter;
+      const graphicKey = `result-${i + 1}`;
+      const x = i * gapX + sceneContainerCenter - (gapX * length) / 2 + gapX;
+      const y = polygonsStartY - height / 2 - 30;
 
-      const { body, graphics } = Separate(
-        {
-          x: itemX + (gapX - width) / 2,
-          y: y - height / 2,
-          width,
-          height,
-        },
-        i,
-        handleChangeResult
-      );
+      const { body, graphics } = Separate({
+        x,
+        y,
+        width,
+        height,
+        graphicKey,
+        texture: separate1Texture,
+        callback: handleChangeResult,
+      });
 
-      app.stage.addChild(graphics);
+      const { graphics: separateText } = SeparateText({
+        x: x,
+        y: y,
+        length,
+        graphicKey,
+      });
+
+      Container.addChild(separateText, graphics);
       World.addBody(world, body);
-
-      new ResultTextCreator().init(itemX + 20, y, i);
     }
-
-    app.stage.addChild(
-      resultBox,
-      resultText,
-      randomModeBox,
-      randomModeText,
-      chooseBoxText,
-      modeText
-    );
   }
 }
 

@@ -1,1 +1,0 @@
-{"version":3,"file":"main.eefcf94a36030e8b5e4f.css","mappings":"AAAA,KACE,UACA,SACA,aACA,Y","sources":["webpack://web-app/./src/index.scss"],"sourcesContent":["body {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100vh;\r\n  width: 100vw;\r\n}\r\n"],"names":[],"sourceRoot":""}

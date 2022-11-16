@@ -1,5 +1,6 @@
-import AppInit from "../AppInit";
-import Plinko from "../../components/plinko";
+import { Assets } from "pixi.js";
+import AppInit from "../../App";
+import Plink from "../../components/plink";
 
 class PlinkosCreator extends AppInit {
   constructor() {
@@ -10,7 +11,7 @@ class PlinkosCreator extends AppInit {
     this.plinkosStartY = this.polygonsStartY - 30 - this.length * this.gapY;
   }
 
-  init() {
+  async init() {
     const {
       gapX,
       gapY,
@@ -18,15 +19,18 @@ class PlinkosCreator extends AppInit {
       plinkoCategory,
       plinkosStartY,
       sceneContainerCenter,
-      app,
+      Container,
       world,
       World,
     } = this;
 
-    World.remove(world, world.bodies);
-    while (app.stage.children[0]) {
-      app.stage.removeChild(app.stage.children[0]);
-    }
+    // World.remove(world, world.bodies);
+    // while (app.stage.children[0]) {
+    //   app.stage.removeChild(app.stage.children[0]);
+    // }
+
+    const loadGameAssets = await Assets.loadBundle("game-screen");
+    const { plinkTexture } = loadGameAssets;
 
     for (let i = 0; i < length; i++) {
       if (i > 1) {
@@ -36,15 +40,16 @@ class PlinkosCreator extends AppInit {
         for (let j = 0; j <= i; j++) {
           const itemX = (startCountFromX + j) * gapX + sceneContainerCenter;
 
-          const { body, graphics } = Plinko({
+          const { body, graphics } = Plink({
             x: itemX,
             y: itemY,
             radius: 5,
             rowIndex: i,
             category: plinkoCategory,
+            texture: plinkTexture,
           });
 
-          app.stage.addChild(graphics);
+          Container.addChild(graphics);
           World.addBody(world, body);
         }
       }

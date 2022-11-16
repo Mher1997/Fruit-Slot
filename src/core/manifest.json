@@ -1,0 +1,47 @@
+{
+  "bundles": [
+    {
+      "name": "load-screen",
+      "assets": [
+        {
+          "name": "background",
+          "srcs": "images/background.png"
+        }
+      ]
+    },
+    {
+      "name": "game-screen",
+      "assets": [
+        {
+          "name": "cloudTexture",
+          "srcs": "images/cloud.png"
+        },
+        {
+          "name": "ballTexture",
+          "srcs": "images/ball.png"
+        },
+        {
+          "name": "separate1Texture",
+          "srcs": "images/separate1.png"
+        },
+        {
+          "name": "plinkTexture",
+          "srcs": "images/plink.png"
+        },
+        {
+          "name": "plinkActiveTexture",
+          "srcs": "images/plink-active.png"
+        }
+      ]
+    },
+    {
+      "name": "fonts",
+      "assets": [
+        {
+          "name": "rubik-medium",
+          "srcs": "fonts/Rubik-Medium.ttf"
+        }
+      ]
+    }
+  ]
+}

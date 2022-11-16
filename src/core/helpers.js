@@ -30,7 +30,7 @@ export const getPairs = (pairs, callback) => {
         case "ball":
           ballBody = { ...value };
           break;
-        case "plinko":
+        case "plink":
           plinkoBody = { ...value };
           break;
         case "endLine":

@@ -1,4 +1,4 @@
-import AppInit from "./AppInit";
+import AppInit from "../App";
 import TWEEN from "@tweenjs/tween.js";
 class EventsListeners extends AppInit {
   constructor() {
@@ -13,8 +13,8 @@ class EventsListeners extends AppInit {
       World,
       world,
       engine,
-      app,
-      getBodyGraphic,
+      Container,
+      getGraphicByBodyKey,
       textResultAnimate,
       handleCollisionBall,
     } = this;
@@ -27,22 +27,24 @@ class EventsListeners extends AppInit {
         const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
 
         for (let [key, value] of Object.entries(bodies)) {
-          if (value.label === "plinko") {
-            value.render.fillStyle = "red";
-          }
-        }
-      }
-    });
+          const secondBody = pair[key === "bodyA" ? "bodyB" : "bodyA"];
 
-    Events.on(engine, "collisionActive", function (event) {
-      const pairs = event.pairs;
-      for (let i = 0; i < pairs.length; i++) {
-        const pair = pairs[i];
-        const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
+          switch (value.label) {
+            case "separate":
+              const ballBody = secondBody;
+              const separateGraphic = getGraphicByBodyKey(value);
+              const ballGraphic = getGraphicByBodyKey(ballBody);
 
-        for (let [key, value] of Object.entries(bodies)) {
-          if (value.label === "plinko") {
-            value.render.fillStyle = "red";
+              Container.removeChild(ballGraphic);
+              World.remove(world, ballBody);
+
+              if (!separateGraphic?.isActiveAnimation) {
+                textResultAnimate(separateGraphic);
+              }
+
+              break;
+            default:
+              break;
           }
         }
       }
@@ -55,63 +57,47 @@ class EventsListeners extends AppInit {
         const pair = pairs[i];
         const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
 
-        let ballBody, plinkoBody;
+        let ballBody, plinkBody;
 
         for (let [key, value] of Object.entries(bodies)) {
-          const secondValue = pair[key === "bodyA" ? "bodyB" : "bodyA"];
+          const secondBody = pair[key === "bodyA" ? "bodyB" : "bodyA"];
           switch (value.label) {
             case "ball":
               ballBody = { ...value };
               break;
-            case "plinko":
-              plinkoBody = { ...value };
-              break;
-            case "endLine": {
-              const { body, graphic } = getBodyGraphic(
-                secondValue,
-                "graphicKey"
-              );
-
-              app.stage.removeChild(graphic);
-              World.remove(world, body);
-              break;
-            }
-            case "separate":
-              const { graphic } = getBodyGraphic(value, "id");
-              const { isActiveAnimation } = graphic;
-              if (!isActiveAnimation) {
-                textResultAnimate(graphic);
-              }
+            case "plink":
+              plinkBody = { ...value };
               break;
             default:
               break;
           }
         }
 
-        if (ballBody && plinkoBody) {
-          handleCollisionBall(ballBody, plinkoBody);
+        if (ballBody && plinkBody) {
+          handleCollisionBall(ballBody, plinkBody);
+          const plinkoGraphic = getGraphicByBodyKey(plinkBody);
         }
       }
     });
   }
 
-  getBodyGraphic = (body, key) => {
-    const { app } = this;
+  getGraphicByBodyKey = (body, key = "graphicKey") => {
+    const { Container } = this;
     const bodyValue = body[key];
-    const graphic = app.stage.children.find((item) => item[key] === bodyValue);
+    const graphic = Container.children.find((item) => item[key] === bodyValue);
 
-    return { body, graphic };
+    return graphic;
   };
 
-  handleCollisionBall = (ballBody, plinkoBody) => {
+  handleCollisionBall = (ballBody, plinkBody) => {
     const { Body } = this;
 
     const angleAbsolute =
-      plinkoBody.position.y - (ballBody.position.y + ballBody.circleRadius) - 4;
+      plinkBody.position.y - (ballBody.position.y + ballBody.circleRadius) - 4;
 
     if (angleAbsolute >= 0) {
       const resWays = ballBody.resWays;
-      const plinkoRow = plinkoBody.rowIndex;
+      const plinkoRow = plinkBody.rowIndex;
       if (resWays) {
         Body.setVelocity(ballBody, {
           x: resWays[plinkoRow - 2] === "+" ? 1 : -1,
@@ -129,7 +115,7 @@ class EventsListeners extends AppInit {
       y: yPos,
     });
     tween.easing(TWEEN.Easing.Bounce.Out);
-    tween.to({ y: [yPos + 10, yPos] }, 500).start();
+    tween.to({ y: [yPos + 10, yPos] }, 300).start();
     tween.onUpdate(function ({ x, y }) {
       graphic.position.y = y;
     });

@@ -1,11 +1,11 @@
 import { Bodies } from "matter-js";
-import { Graphics } from "pixi.js";
+import { Sprite } from "pixi.js";
 import { shuffle } from "../../core/helpers";
 
 let graphicKey = 1;
 
 const PlinkoBall = (options) => {
-  const { x, y, radius, resWays, mask, category } = options;
+  const { x, y, radius, resWays, mask, category, texture } = options;
 
   const body = Bodies.circle(x, y, radius, {
     isStatic: false,
@@ -22,13 +22,12 @@ const PlinkoBall = (options) => {
     },
   });
 
-  const graphics = new Graphics();
-
+  const graphics = Sprite.from(texture);
+  graphics.width = radius * Math.PI + 6;
+  graphics.height = radius * Math.PI + 6;
   graphics.graphicKey = graphicKey;
-  graphics.lineStyle(0);
-  graphics.beginFill(0xfaf7f0, 1);
-  graphics.drawCircle(0, 0, radius);
-  graphics.endFill();
+  graphics.anchor.set(0.5);
+  graphics.zIndex = 1;
 
   graphicKey++;
 
