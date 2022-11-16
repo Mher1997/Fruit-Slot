@@ -62,6 +62,7 @@ class AppInit {
     this.Events = Events;
     this.MouseConstraint = MouseConstraint;
     this.Container = container;
+
     this.plinkWidth = 5;
 
     if (!AppInit._instance) {
@@ -93,14 +94,17 @@ class AppInit {
     AppInit._instance = this;
     this.world.gravity.y = 1.6;
 
+    await PIXI.Assets.init({
+      manifest: require("./core/resources/manifest.json"),
+    });
+
+    const loadScreenAssets = await PIXI.Assets.loadBundle("load-screen");
+    await PIXI.Assets.loadBundle("fonts");
+
     sceneContainer.appendChild(app.view);
     Runner.run(engine);
 
     handleAddTicker();
-
-    await PIXI.Assets.init({ manifest: require("./core/manifest.json") });
-    await PIXI.Assets.loadBundle("fonts");
-    const loadScreenAssets = await PIXI.Assets.loadBundle("load-screen");
 
     const background = PIXI.Sprite.from(loadScreenAssets.background);
     background.width = sceneContainerWidth;
@@ -110,8 +114,8 @@ class AppInit {
     app.stage.addChild(Container);
 
     window.addEventListener("resize", () => {
-      Container = sceneContainer.clientWidth;
-      Container = sceneContainer.clientHeight;
+      Container.width = sceneContainer.clientWidth;
+      Container.height = sceneContainer.clientHeight;
     });
   }
 }

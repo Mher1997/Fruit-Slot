@@ -1,6 +1,7 @@
-import AppInit from "../App";
+import AppInit from "../../App";
 import TWEEN from "@tweenjs/tween.js";
 import { Assets } from "pixi.js";
+
 class EventsListeners extends AppInit {
   constructor() {
     super();
@@ -116,13 +117,16 @@ class EventsListeners extends AppInit {
   textResultAnimate = (graphic) => {
     graphic.isActiveAnimation = true;
     const yPos = graphic.position.y;
+
     const tween = new TWEEN.Tween({
       x: graphic.position.x,
       y: yPos,
-    });
-    tween.easing(TWEEN.Easing.Bounce.Out);
-    tween.to({ y: [yPos + 10, yPos] }, 300).start();
-    tween.onUpdate(function ({ x, y }) {
+    })
+      .easing(TWEEN.Easing.Bounce.Out)
+      .to({ y: [yPos + 10, yPos] }, 300)
+      .start();
+
+    tween.onUpdate(({ y }) => {
       graphic.position.y = y;
     });
     tween.onComplete(() => {

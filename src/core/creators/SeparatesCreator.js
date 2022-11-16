@@ -35,8 +35,7 @@ class SeparatesCreator extends PlinkoCreator {
       resultText.text = result + 1;
     };
 
-    const loadGameAssets = await Assets.loadBundle("game-screen");
-    const { separate1Texture } = loadGameAssets;
+    const loadGameAssets = await Assets.loadBundle("separates");
 
     for (let i = 0; i < length - 1; i++) {
       const graphicKey = `result-${i + 1}`;
@@ -47,6 +46,7 @@ class SeparatesCreator extends PlinkoCreator {
         gapX +
         plinkWidth / 2;
       const y = polygonsStartY - height / 2 - 30;
+      const category = Math.abs(Math.ceil(i + 1 - length / 2)) || 1;
 
       const { body, graphics } = Separate({
         x,
@@ -54,14 +54,14 @@ class SeparatesCreator extends PlinkoCreator {
         width,
         height,
         graphicKey,
-        texture: separate1Texture,
+        texture: loadGameAssets[`separateTexture${category}`],
         callback: handleChangeResult,
       });
 
       const { graphics: separateText } = SeparateText({
         x: x,
         y: y,
-        length,
+        category,
         graphicKey,
       });
 

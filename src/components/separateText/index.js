@@ -1,11 +1,9 @@
 import { Text } from "pixi.js";
 
 const SeparateText = (options) => {
-  const { x, y, length, graphicKey } = options;
+  const { x, y, graphicKey, category } = options;
 
-  const separateLabel = Math.abs(length / 2);
-
-  const text = new Text(separateLabel || 0.5, {
+  const text = new Text(category - 0.5, {
     fontFamily: "Arial",
     fontSize: 16,
     fill: "#FFFFFF",

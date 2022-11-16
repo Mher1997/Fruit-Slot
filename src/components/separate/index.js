@@ -3,13 +3,12 @@ import { Sprite } from "pixi.js";
 
 const Separate = (options) => {
   const { x, y, width, graphicKey, texture } = options;
-  const label = "separate";
 
   const body = Bodies.rectangle(x, y, width - 10, 1, {
     isStatic: true,
     isSensor: true,
     graphicKey,
-    label,
+    label: "separate",
   });
 
   const graphics = Sprite.from(texture);

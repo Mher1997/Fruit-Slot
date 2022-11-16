@@ -1,0 +1,76 @@
+{
+  "bundles": [
+    {
+      "name": "load-screen",
+      "assets": [
+        {
+          "name": "background",
+          "srcs": "images/background.png"
+        }
+      ]
+    },
+    {
+      "name": "game-screen",
+      "assets": [
+        {
+          "name": "cloudTexture",
+          "srcs": "images/cloud.png"
+        },
+        {
+          "name": "ballTexture",
+          "srcs": "images/ball.png"
+        },
+        {
+          "name": "plinkTexture",
+          "srcs": "images/plink.png"
+        },
+        {
+          "name": "plinkActiveTexture",
+          "srcs": "images/plink-active.png"
+        }
+      ]
+    },
+    {
+      "name": "separates",
+      "assets": [
+        {
+          "name": "separateTexture1",
+          "srcs": "images/separates/separate-1.png"
+        },
+        {
+          "name": "separateTexture2",
+          "srcs": "images/separates/separate-2.png"
+        },
+        {
+          "name": "separateTexture3",
+          "srcs": "images/separates/separate-3.png"
+        },
+        {
+          "name": "separateTexture4",
+          "srcs": "images/separates/separate-4.png"
+        },
+        {
+          "name": "separateTexture5",
+          "srcs": "images/separates/separate-5.png"
+        },
+        {
+          "name": "separateTexture6",
+          "srcs": "images/separates/separate-6.png"
+        },
+        {
+          "name": "separateTexture7",
+          "srcs": "images/separates/separate-7.png"
+        }
+      ]
+    },
+    {
+      "name": "fonts",
+      "assets": [
+        {
+          "name": "rubik-medium",
+          "srcs": "fonts/Rubik-Medium.ttf"
+        }
+      ]
+    }
+  ]
+}
