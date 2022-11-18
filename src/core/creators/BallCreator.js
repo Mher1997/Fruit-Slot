@@ -6,9 +6,10 @@ import { resultAction } from "../helpers";
 class BallCreator extends PlinkoCreator {
   constructor() {
     super();
+    console.log(this.gapX, "this.gapX");
     this.ballCategory = 0x0002;
     this.ways = this.length - 2;
-    this.ballRadius = this.gapX / 2.678;
+    this.ballRadius = this.gapX / 2.78;
   }
 
   handlePlink = () => {
@@ -18,7 +19,7 @@ class BallCreator extends PlinkoCreator {
       world,
       ballRadius,
       ballCategory,
-      plinkosStartY,
+      cloudY,
       plinkoCategory,
       sceneContainerCenter,
       addSceneObject,
@@ -29,10 +30,12 @@ class BallCreator extends PlinkoCreator {
     const ball = Assets.get(`ballTexture-${ballType}`);
 
     let resWays = [];
-    let result =
-      resultAction.get() === "Random"
-        ? Math.floor(Math.random(0, ways) * 10)
-        : resultAction.get();
+    // let result =
+    //   resultAction.get() === "Random"
+    //     ? Math.floor(Math.random(0, ways) * 10)
+    //     : resultAction.get();
+
+    let result = 0;
 
     for (let i = 0; i < ways; i++) {
       resWays.push(i < result ? "+" : "-");
@@ -40,7 +43,7 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: plinkosStartY + 30,
+      y: cloudY + 20,
       resWays,
       texture: ball,
       radius: ballRadius,
@@ -58,10 +61,10 @@ class BallCreator extends PlinkoCreator {
   };
 
   renderButton = () => {
-    const { Container, plinkosStartY, handlePlink } = this;
+    const { Container, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter + 300, plinkosStartY + 100];
+    const [x, y] = [this.sceneContainerCenter + 300, 100];
 
     button.beginFill(0xde3249);
     button.drawCircle(x, y, 50);
@@ -102,7 +105,8 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    this.renderButton();
+    setInterval(this.handlePlink, 500);
+    // this.renderButton();
   }
 }
 

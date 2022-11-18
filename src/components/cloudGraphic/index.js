@@ -3,7 +3,7 @@ import BallCreator from "../../core/creators/BallCreator";
 
 class CloudGraphic extends BallCreator {
   async init() {
-    const { Container, plinkosStartY, sceneContainerCenter } = this;
+    const { Container, cloudY, sceneContainerCenter } = this;
 
     const loadGameAssets = await Assets.loadBundle("game-screen");
     const { cloudTexture } = loadGameAssets;
@@ -11,7 +11,7 @@ class CloudGraphic extends BallCreator {
     const graphics = Sprite.from(cloudTexture);
     graphics.width = 250;
     graphics.height = 180;
-    graphics.y = plinkosStartY - 20;
+    graphics.y = cloudY;
     graphics.x = sceneContainerCenter;
     graphics.anchor.set(0.5, 0.5);
     graphics.zIndex = 2;

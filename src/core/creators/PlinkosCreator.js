@@ -5,10 +5,8 @@ import Plink from "../../components/plink";
 class PlinkosCreator extends AppInit {
   constructor() {
     super();
-    this.gapY = this.gapX * 1.125;
     this.plinkoCategory = 0x0001;
     this.polygonsStartY = this.sceneContainerHeight;
-    this.plinkosStartY = 150;
   }
 
   async init() {
@@ -16,9 +14,9 @@ class PlinkosCreator extends AppInit {
       gapX,
       gapY,
       length,
+      cloudY,
       plinkWidth,
       plinkoCategory,
-      plinkosStartY,
       sceneContainerCenter,
       Container,
       world,
@@ -35,9 +33,8 @@ class PlinkosCreator extends AppInit {
 
     for (let i = 0; i < length; i++) {
       if (i > 1) {
-        const itemY = i * gapY + plinkosStartY;
+        const itemY = (i - 2) * gapY + cloudY + 100;
         const startCountFromX = -i / 2;
-
         for (let j = 0; j <= i; j++) {
           const itemX = (startCountFromX + j) * gapX + sceneContainerCenter;
 

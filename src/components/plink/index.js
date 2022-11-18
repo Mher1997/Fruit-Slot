@@ -22,9 +22,9 @@ const Plink = (options) => {
   graphics.y = y;
   graphics.zIndex = 1;
   graphics.graphicKey = graphicKey;
-  graphics.width = (radius * Math.PI) / 2 + 2;
-  graphics.height = (radius * Math.PI) / 2 + 2;
-  graphics.scale.set(1);
+  graphics.width = radius * 2;
+  graphics.height = radius * 2;
+  // graphics.scale.set(1);
   graphics.anchor.set(0.5, 0.5);
 
   return { body, graphics };

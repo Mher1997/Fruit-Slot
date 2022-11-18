@@ -21,7 +21,7 @@ class EventsListeners extends AppInit {
       handleCollisionBall,
     } = this;
 
-    Events.on(engine, "collisionStart", function (event) {
+    Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       const plinkActiveTexture = Assets.get("plinkActiveTexture");
 
@@ -56,7 +56,7 @@ class EventsListeners extends AppInit {
       }
     });
 
-    Events.on(engine, "collisionEnd", function (event) {
+    Events.on(engine, "collisionEnd", (event) => {
       const pairs = event.pairs;
       const plinkTexture = Assets.get("plinkTexture");
 
@@ -64,26 +64,20 @@ class EventsListeners extends AppInit {
         const pair = pairs[i];
         const bodies = { bodyA: { ...pair.bodyA }, bodyB: { ...pair.bodyB } };
 
-        let ballBody, plinkBody;
-
         for (let [key, value] of Object.entries(bodies)) {
           const secondBody = pair[key === "bodyA" ? "bodyB" : "bodyA"];
           switch (value.label) {
             case "ball":
-              ballBody = { ...value };
+              secondBody.label === "plink" &&
+                handleCollisionBall(value, secondBody);
               break;
             case "plink":
-              plinkBody = { ...value };
               const plinkoGraphic = getGraphicByBodyKey(value);
               plinkoGraphic.texture = plinkTexture;
               break;
             default:
               break;
           }
-        }
-
-        if (ballBody && plinkBody) {
-          handleCollisionBall(ballBody, plinkBody);
         }
       }
     });
@@ -99,17 +93,31 @@ class EventsListeners extends AppInit {
   handleCollisionBall = (ballBody, plinkBody) => {
     const { Body } = this;
 
-    const angleAbsolute =
-      plinkBody.position.y - (ballBody.position.y + ballBody.circleRadius) - 4;
+    const differenceY = plinkBody.position.y - ballBody.position.y;
+    const differenceX = plinkBody.position.x - ballBody.position.x;
 
-    if (angleAbsolute >= 0) {
-      const resWays = ballBody.resWays;
-      const plinkoRow = plinkBody.rowIndex;
-      if (resWays) {
-        Body.setVelocity(ballBody, {
-          x: resWays[plinkoRow - 2] === "+" ? 1 : -1,
-          y: -2.8,
-        });
+    if (differenceY > 0) {
+      const collisionDeg =
+        Math.atan(Math.abs(differenceX) / differenceY) * (180 / Math.PI);
+      const normalDeg = collisionDeg < 20;
+      const badDeg = collisionDeg >= 20 && collisionDeg < 70;
+
+      if (normalDeg || badDeg) {
+        const resWays = ballBody.resWays;
+        const plinkoRow = plinkBody.rowIndex;
+        const directionToRight = resWays[plinkoRow - 2] === "+";
+        const isZeroVelocity =
+          badDeg &&
+          ((directionToRight && differenceX > 0) ||
+            !directionToRight * differenceX < 0);
+        const velocityX = isZeroVelocity ? 0 : 0.6;
+
+        if (resWays) {
+          Body.setVelocity(ballBody, {
+            x: directionToRight ? velocityX : -velocityX,
+            y: -2.8,
+          });
+        }
       }
     }
   };
@@ -133,6 +141,15 @@ class EventsListeners extends AppInit {
       graphic.isActiveAnimation = false;
     });
   };
+
+  circleIntersect(x1, y1, r1, x2, y2, r2) {
+    // Calculate the distance between the two circles
+    let squareDistance = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+
+    // When the distance is smaller or equal to the sum
+    // of the two radius, the circles touch or overlap
+    return squareDistance <= (r1 + r2) * (r1 + r2);
+  }
 }
 
 export default EventsListeners;

@@ -11,7 +11,7 @@ class SeparatesCreator extends PlinkoCreator {
       gapX,
       length,
       plinkWidth,
-      plinkosStartY,
+      cloudY,
       sceneContainerCenter,
       gapY,
       world,
@@ -23,8 +23,10 @@ class SeparatesCreator extends PlinkoCreator {
     resultText.y = 125;
     resultText.anchor.set(0.5, 0.5);
 
-    const width = 36;
-    const height = 28;
+    const width = gapX - plinkWidth;
+    const height = width / 1.32;
+    const loadGameAssets = await Assets.loadBundle("separates");
+    const separateY = (length - 2) * gapY + cloudY + 100;
 
     const handleChangeResult = () => {
       const result = resultAction.get();
@@ -36,32 +38,28 @@ class SeparatesCreator extends PlinkoCreator {
       resultText.text = result + 1;
     };
 
-    const loadGameAssets = await Assets.loadBundle("separates");
-
     for (let i = 0; i < length - 1; i++) {
       const graphicKey = `result-${i + 1}`;
-      const x =
-        i * gapX +
-        sceneContainerCenter -
-        (gapX * length) / 2 +
-        gapX +
-        plinkWidth / 2;
-      const y = length * gapY + plinkosStartY - 10;
+      const separateX =
+        i * gapX + sceneContainerCenter - (gapX * length) / 2 + gapX;
+
       const category = Math.abs(Math.ceil(i + 1 - length / 2)) || 1;
 
       const { body, graphics } = Separate({
-        x,
-        y,
+        x: separateX,
+        y: separateY,
         width,
         height,
         graphicKey,
-        texture: loadGameAssets[`separateTexture${category}`],
+        texture:
+          loadGameAssets[`separateTexture${category}`] ||
+          loadGameAssets.separateTexture7,
         callback: handleChangeResult,
       });
 
       const { graphics: separateText } = SeparateText({
-        x: x,
-        y: y,
+        x: separateX,
+        y: separateY,
         category,
         graphicKey,
       });
