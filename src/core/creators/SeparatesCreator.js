@@ -10,7 +10,7 @@ class SeparatesCreator extends PlinkoCreator {
       Container,
       gapX,
       length,
-      plinkWidth,
+      plinkRadius,
       cloudY,
       sceneContainerCenter,
       gapY,
@@ -23,7 +23,7 @@ class SeparatesCreator extends PlinkoCreator {
     resultText.y = 125;
     resultText.anchor.set(0.5, 0.5);
 
-    const width = gapX - plinkWidth;
+    const width = gapX - plinkRadius;
     const height = width / 1.32;
     const loadGameAssets = await Assets.loadBundle("separates");
     const separateY = (length - 2) * gapY + cloudY + 100;
@@ -62,6 +62,7 @@ class SeparatesCreator extends PlinkoCreator {
         y: separateY,
         category,
         graphicKey,
+        height,
       });
 
       Container.addChild(separateText, graphics);

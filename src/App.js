@@ -12,29 +12,12 @@ const Engine = Matter.Engine,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint;
 
-let h, w;
-const size = [1000, 670];
-const ratio = size[0] / size[1];
-
-const detectResolution = () => {
-  if (window.innerWidth / window.innerHeight >= ratio) {
-    w = window.innerHeight * ratio;
-    h = window.innerHeight;
-  } else {
-    w = window.innerWidth;
-    h = window.innerWidth / ratio;
-  }
-};
-
-detectResolution();
-
 //PIXI app
 const sceneContainer = document.body;
 const app = new PIXI.Application({
   autoResize: true,
-  resizeTo: sceneContainer,
-  width: window.innerWidth,
-  height: window.innerHeight,
+  resizeTo: window,
+  resolution: 1,
 });
 
 const engine = Engine.create();
@@ -44,45 +27,51 @@ const container = new PIXI.Container();
 container.sortableChildren = true;
 
 // Matter app
-const render = Render.create({
-  element: sceneContainer,
-  engine: engine,
-  options: {
-    width: sceneContainer.clientWidth,
-    height: sceneContainer.clientHeight,
-    showAngleIndicator: true,
-    showDebug: true,
-    showBroadphase: true,
-    showBounds: true,
-    showVelocity: true,
-    showCollisions: true,
-    showSeparations: true,
-    // showAxes: true,
-    // showPositions: true,
-    showIds: false,
-    showShadows: false,
-    showVertexNumbers: false,
-    showConvexHulls: false,
-    showInternalEdges: false,
-    showMousePosition: false,
-  },
-});
-Render.run(render);
+// const render = Render.create({
+//   element: sceneContainer,
+//   engine: engine,
+//   options: {
+//     width: sceneContainer.clientWidth,
+//     height: sceneContainer.clientHeight,
+//     showAngleIndicator: true,
+//     showDebug: true,
+//     showBroadphase: true,
+//     showBounds: true,
+//     showVelocity: true,
+//     showCollisions: true,
+//     showSeparations: true,
+//     // showAxes: true,
+//     // showPositions: true,
+//     showIds: false,
+//     showShadows: false,
+//     showVertexNumbers: false,
+//     showConvexHulls: false,
+//     showInternalEdges: false,
+//     showMousePosition: false,
+//   },
+// });
+// Render.run(render);
+
+let h, w;
+
+if (window.innerWidth / window.innerHeight >= 1) {
+  w = window.innerHeight * 0.88;
+  h = window.innerHeight;
+} else {
+  w = window.innerWidth;
+  h = window.innerWidth;
+}
 
 class AppInit {
   constructor(length, result) {
-    this.cloudY = 80;
     this.length = length || AppInit?._instance?.length;
-    this.result = result || AppInit?._instance?.result;
-    this.plinkWidth = window.innerWidth / (this.length * 10);
-    this.gapX =
-      (window.innerWidth - length * this.plinkWidth - 230) /
-        (this.length - 1) || AppInit?._instance?.gapX;
-
+    this.plinkRadius = w / (this.length * 8);
+    this.gapX = this.plinkRadius * 6.6;
     this.gapY = this.gapX * 1.2;
     this.sceneContainerWidth = sceneContainer.clientWidth;
     this.sceneContainerHeight = sceneContainer.clientHeight;
     this.sceneContainerCenter = this.sceneContainerWidth / 2;
+    this.cloudY = 80;
     this.app = app;
     this.engine = engine;
     this.world = engine.world;
@@ -117,11 +106,14 @@ class AppInit {
       Container,
       sceneContainerWidth,
       sceneContainerHeight,
+      plinkRadius,
       handleAddTicker,
     } = this;
 
     AppInit._instance = this;
-    this.world.gravity.y = 1.8;
+
+    engine.gravity.y = 1.6;
+    engine.gravity.scale = plinkRadius / 4000;
 
     await PIXI.Assets.init({
       manifest: require("./core/resources/manifest.json"),
@@ -150,7 +142,7 @@ class AppInit {
     app.stage.addChild(Container);
 
     window.addEventListener("resize", () => {
-      detectResolution();
+      // detectResolution();
       // Container.width = w;
       // Container.height = h;
     });

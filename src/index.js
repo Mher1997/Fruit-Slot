@@ -14,6 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   new PlinkosCreator().init();
   new SeparatesCreator().init();
   new BallCreator().init();
-  new CloudGraphic().init();
+  // new CloudGraphic().init();
   new EventsListeners().init();
 });

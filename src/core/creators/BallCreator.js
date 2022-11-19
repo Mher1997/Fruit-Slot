@@ -6,10 +6,9 @@ import { resultAction } from "../helpers";
 class BallCreator extends PlinkoCreator {
   constructor() {
     super();
-    console.log(this.gapX, "this.gapX");
     this.ballCategory = 0x0002;
     this.ways = this.length - 2;
-    this.ballRadius = this.gapX / 2.78;
+    this.ballRadius = this.plinkRadius * 2.3;
   }
 
   handlePlink = () => {
@@ -30,12 +29,12 @@ class BallCreator extends PlinkoCreator {
     const ball = Assets.get(`ballTexture-${ballType}`);
 
     let resWays = [];
-    // let result =
-    //   resultAction.get() === "Random"
-    //     ? Math.floor(Math.random(0, ways) * 10)
-    //     : resultAction.get();
+    let result =
+      resultAction.get() === "Random"
+        ? Math.floor(Math.random(0, ways) * 10)
+        : resultAction.get();
 
-    let result = 0;
+    // let result = 1;
 
     for (let i = 0; i < ways; i++) {
       resWays.push(i < result ? "+" : "-");
@@ -43,7 +42,7 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: cloudY + 20,
+      y: 100,
       resWays,
       texture: ball,
       radius: ballRadius,
@@ -64,10 +63,10 @@ class BallCreator extends PlinkoCreator {
     const { Container, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter + 300, 100];
+    const [x, y] = [this.sceneContainerCenter + 100, 100];
 
     button.beginFill(0xde3249);
-    button.drawCircle(x, y, 50);
+    button.drawCircle(x, y, 20);
     button.endFill();
     button.interactive = true;
     button.cursor = "pointer";
@@ -105,8 +104,8 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    setInterval(this.handlePlink, 500);
-    // this.renderButton();
+    // setTimeout(this.handlePlink, 500);
+    this.renderButton();
   }
 }
 

@@ -91,31 +91,33 @@ class EventsListeners extends AppInit {
   };
 
   handleCollisionBall = (ballBody, plinkBody) => {
+    const radToDeg = 180 / Math.PI;
     const { Body } = this;
 
     const differenceY = plinkBody.position.y - ballBody.position.y;
     const differenceX = plinkBody.position.x - ballBody.position.x;
+    const ballRadius = ballBody.circleRadius;
 
     if (differenceY > 0) {
       const collisionDeg =
-        Math.atan(Math.abs(differenceX) / differenceY) * (180 / Math.PI);
-      const normalDeg = collisionDeg < 20;
-      const badDeg = collisionDeg >= 20 && collisionDeg < 70;
+        Math.atan(Math.abs(differenceX) / differenceY) * radToDeg;
 
-      if (normalDeg || badDeg) {
+      if (collisionDeg < 45) {
         const resWays = ballBody.resWays;
         const plinkoRow = plinkBody.rowIndex;
         const directionToRight = resWays[plinkoRow - 2] === "+";
-        const isZeroVelocity =
-          badDeg &&
-          ((directionToRight && differenceX > 0) ||
-            !directionToRight * differenceX < 0);
-        const velocityX = isZeroVelocity ? 0 : 0.6;
+
+        // const isNastyDirection =
+        //   (directionToRight && differenceX >= 0) ||
+        //   (!directionToRight && differenceX <= 0);
+        // const collision = collisionDeg / radToDeg;
+
+        // const velocityX = collision > 0.4 ? collision : ballRadius / 15;
 
         if (resWays) {
           Body.setVelocity(ballBody, {
-            x: directionToRight ? velocityX : -velocityX,
-            y: -2.8,
+            x: directionToRight ? ballRadius / 10 : -ballRadius / 10,
+            y: -ballRadius / 4,
           });
         }
       }
@@ -141,15 +143,6 @@ class EventsListeners extends AppInit {
       graphic.isActiveAnimation = false;
     });
   };
-
-  circleIntersect(x1, y1, r1, x2, y2, r2) {
-    // Calculate the distance between the two circles
-    let squareDistance = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
-
-    // When the distance is smaller or equal to the sum
-    // of the two radius, the circles touch or overlap
-    return squareDistance <= (r1 + r2) * (r1 + r2);
-  }
 }
 
 export default EventsListeners;

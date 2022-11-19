@@ -7,7 +7,7 @@ const Plink = (options) => {
   const body = Bodies.circle(x, y, radius, {
     isStatic: true,
     friction: 1,
-    restitution: 1,
+    restitution: 0.8,
     density: 1,
     collisionFilter: {
       category,
