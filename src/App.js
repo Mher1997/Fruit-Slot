@@ -5,7 +5,6 @@ import "./index.scss";
 const Engine = Matter.Engine,
   World = Matter.World,
   Body = Matter.Body,
-  Render = Matter.Render,
   Runner = Matter.Runner,
   Bodies = Matter.Bodies,
   Events = Matter.Events,
@@ -13,69 +12,52 @@ const Engine = Matter.Engine,
   MouseConstraint = Matter.MouseConstraint;
 
 //PIXI app
-const sceneContainer = document.body;
+const canvasContainer = document.getElementById("game-app");
 const app = new PIXI.Application({
+  resolution: 1,
   autoResize: true,
   resizeTo: window,
-  resolution: 1,
 });
 
-const engine = Engine.create();
 const sceneObjects = [];
+const engine = Engine.create();
 
-const container = new PIXI.Container();
-container.sortableChildren = true;
+const AppRoot = new PIXI.Container();
+const Container = new PIXI.Container();
 
-// Matter app
-// const render = Render.create({
-//   element: sceneContainer,
-//   engine: engine,
-//   options: {
-//     width: sceneContainer.clientWidth,
-//     height: sceneContainer.clientHeight,
-//     showAngleIndicator: true,
-//     showDebug: true,
-//     showBroadphase: true,
-//     showBounds: true,
-//     showVelocity: true,
-//     showCollisions: true,
-//     showSeparations: true,
-//     // showAxes: true,
-//     // showPositions: true,
-//     showIds: false,
-//     showShadows: false,
-//     showVertexNumbers: false,
-//     showConvexHulls: false,
-//     showInternalEdges: false,
-//     showMousePosition: false,
-//   },
-// });
-// Render.run(render);
+AppRoot.name = "root";
+Container.sortableChildren = true;
+Container.name = "main";
 
-let h, w;
+const ratio = 672 / 444;
+let w, h;
 
-if (window.innerWidth / window.innerHeight >= 1) {
-  w = window.innerHeight * 0.88;
-  h = window.innerHeight;
-} else {
-  w = window.innerWidth;
-  h = window.innerWidth;
-}
+const resize = () => {
+  if (canvasContainer.clientHeight / canvasContainer.clientWidth > 1) {
+    h = canvasContainer.clientWidth / ratio;
+    w = canvasContainer.clientWidth;
+  } else {
+    h = canvasContainer.clientHeight / ratio;
+    w = canvasContainer.clientHeight;
+  }
+};
+
+resize();
 
 class AppInit {
-  constructor(length, result) {
+  constructor(length) {
     this.length = length || AppInit?._instance?.length;
-    this.plinkRadius = w / (this.length * 8);
-    this.gapX = this.plinkRadius * 6.6;
+    this.gapX = w / (this.length * 1.5);
     this.gapY = this.gapX * 1.2;
-    this.sceneContainerWidth = sceneContainer.clientWidth;
-    this.sceneContainerHeight = sceneContainer.clientHeight;
+    this.plinkRadius = this.gapX / 6.6;
+    this.cloudY = 200;
+    this.sceneContainerWidth = canvasContainer.clientWidth;
+    this.sceneContainerHeight = canvasContainer.clientHeight;
     this.sceneContainerCenter = this.sceneContainerWidth / 2;
-    this.cloudY = 80;
     this.app = app;
     this.engine = engine;
     this.world = engine.world;
-    this.Container = container;
+    this.Container = Container;
     this.Body = Body;
     this.World = World;
     this.Mouse = Mouse;
@@ -103,7 +85,6 @@ class AppInit {
 
   async init() {
     const {
-      Container,
       sceneContainerWidth,
       sceneContainerHeight,
       plinkRadius,
@@ -122,7 +103,7 @@ class AppInit {
     const loadScreenAssets = await PIXI.Assets.loadBundle("load-screen");
     await PIXI.Assets.loadBundle("fonts");
 
-    sceneContainer.appendChild(app.view);
+    canvasContainer.appendChild(app.view);
     Runner.run(engine);
 
     handleAddTicker();
@@ -131,20 +112,34 @@ class AppInit {
     const backgroundDetail = PIXI.Sprite.from(
       loadScreenAssets.backgroundDetail
     );
-
     background.width = sceneContainerWidth;
     background.height = sceneContainerHeight;
     backgroundDetail.width = sceneContainerWidth;
     backgroundDetail.height = sceneContainerHeight;
+    Container.cacheAsBitmapResolution = 1;
 
-    Container.addChild(background);
-    Container.addChild(backgroundDetail);
-    app.stage.addChild(Container);
+    AppRoot.addChild(background, backgroundDetail, Container);
+    app.stage.addChild(AppRoot);
+
+    const resizeContainer = () => {
+      background.width = sceneContainerWidth;
+      background.height = sceneContainerHeight;
+      backgroundDetail.width = sceneContainerWidth;
+      backgroundDetail.height = sceneContainerHeight;
+
+      // Container.pivot.x = Container.width / 2;
+      // Container.pivot.y = Container.height / 2;
+      // Container.y = Container.width / 2;
+      // Container.x = Container.height / 2;
+
+      // Container.width = w / ratio - 22;
+      // Container.height = h;
+      // Container.scale.set(1, 1);
+    };
 
     window.addEventListener("resize", () => {
-      // detectResolution();
-      // Container.width = w;
-      // Container.height = h;
+      resize();
+      resizeContainer();
     });
   }
 }

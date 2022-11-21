@@ -92,11 +92,10 @@ class EventsListeners extends AppInit {
 
   handleCollisionBall = (ballBody, plinkBody) => {
     const radToDeg = 180 / Math.PI;
-    const { Body } = this;
+    const { Body, gapX } = this;
 
     const differenceY = plinkBody.position.y - ballBody.position.y;
     const differenceX = plinkBody.position.x - ballBody.position.x;
-    const ballRadius = ballBody.circleRadius;
 
     if (differenceY > 0) {
       const collisionDeg =
@@ -116,8 +115,8 @@ class EventsListeners extends AppInit {
 
         if (resWays) {
           Body.setVelocity(ballBody, {
-            x: directionToRight ? ballRadius / 10 : -ballRadius / 10,
-            y: -ballRadius / 4,
+            x: directionToRight ? gapX / 38 : -gapX / 38,
+            y: -gapX / 13,
           });
         }
       }

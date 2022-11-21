@@ -17,7 +17,7 @@ const PlinkoBall = (options) => {
     restitution: 0.8, //bouncing
     label: "ball",
     graphicKey,
-    resWays: ["-", "+", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+    resWays: shuffledWays,
     collisionFilter: {
       mask,
       category,

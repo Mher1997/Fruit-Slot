@@ -29,12 +29,12 @@ class BallCreator extends PlinkoCreator {
     const ball = Assets.get(`ballTexture-${ballType}`);
 
     let resWays = [];
-    let result =
-      resultAction.get() === "Random"
-        ? Math.floor(Math.random(0, ways) * 10)
-        : resultAction.get();
+    // let result =
+    //   resultAction.get() === "Random"
+    //     ? Math.floor(Math.random(0, ways) * 10)
+    //     : resultAction.get();
 
-    // let result = 1;
+    let result = 7;
 
     for (let i = 0; i < ways; i++) {
       resWays.push(i < result ? "+" : "-");
@@ -42,7 +42,7 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: 100,
+      y: cloudY - 50,
       resWays,
       texture: ball,
       radius: ballRadius,
@@ -104,8 +104,8 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    // setTimeout(this.handlePlink, 500);
-    this.renderButton();
+    setInterval(this.handlePlink, 500);
+    // this.renderButton();
   }
 }
 

@@ -33,7 +33,7 @@ class PlinkosCreator extends AppInit {
 
     for (let i = 0; i < length; i++) {
       if (i > 1) {
-        const itemY = (i - 2) * gapY + cloudY + 100;
+        const itemY = (i - 2) * gapY + cloudY;
         const startCountFromX = -i / 2;
         for (let j = 0; j <= i; j++) {
           const itemX = (startCountFromX + j) * gapX + sceneContainerCenter;

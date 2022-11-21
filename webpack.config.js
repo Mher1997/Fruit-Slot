@@ -12,6 +12,7 @@ const pluginsConfig = [
   new HtmlWebpackPlugin({
     filename: "index.html",
     title: "PixiJS",
+    template: "src/index.html",
   }),
   new CopyPlugin({
     patterns: [{ from: "./src/assets" }],

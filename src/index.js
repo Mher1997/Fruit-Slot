@@ -10,10 +10,10 @@ window.__PIXI_INSPECTOR_GLOBAL_HOOK__ &&
   window.__PIXI_INSPECTOR_GLOBAL_HOOK__.register({ PIXI: PIXI });
 
 document.addEventListener("DOMContentLoaded", () => {
-  new App(14, 3);
+  new App(16, 3);
   new PlinkosCreator().init();
   new SeparatesCreator().init();
   new BallCreator().init();
-  // new CloudGraphic().init();
+  new CloudGraphic().init();
   new EventsListeners().init();
 });
