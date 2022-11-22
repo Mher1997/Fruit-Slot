@@ -105,8 +105,8 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    setInterval(this.handlePlink, 100);
-    // this.renderButton();
+    // setInterval(this.handlePlink, 100);
+    this.renderButton();
   }
 }
 
