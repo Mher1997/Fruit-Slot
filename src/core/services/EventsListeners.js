@@ -48,7 +48,7 @@ class EventsListeners extends AppInit {
             case "plink":
               const plinkoGraphic = getGraphicByBodyKey(value);
               plinkoGraphic.texture = plinkActiveTexture;
-              plinkoGraphic.scale.set(1);
+            // plinkoGraphic.scale.set(1);
             default:
               break;
           }
@@ -97,6 +97,8 @@ class EventsListeners extends AppInit {
     const differenceY = plinkBody.position.y - ballBody.position.y;
     const differenceX = plinkBody.position.x - ballBody.position.x;
 
+    // console.log(ballBody);
+
     if (differenceY > 0) {
       const collisionDeg =
         Math.atan(Math.abs(differenceX) / differenceY) * radToDeg;
@@ -105,7 +107,8 @@ class EventsListeners extends AppInit {
         const resWays = ballBody.resWays;
         const plinkoRow = plinkBody.rowIndex;
         const directionToRight = resWays[plinkoRow - 2] === "+";
-
+        const distanceX = gapX / 40;
+        const distanceY = -gapX / 13;
         // const isNastyDirection =
         //   (directionToRight && differenceX >= 0) ||
         //   (!directionToRight && differenceX <= 0);
@@ -115,8 +118,8 @@ class EventsListeners extends AppInit {
 
         if (resWays) {
           Body.setVelocity(ballBody, {
-            x: directionToRight ? gapX / 38 : -gapX / 38,
-            y: -gapX / 13,
+            x: directionToRight ? distanceX : -distanceX,
+            y: distanceY,
           });
         }
       }

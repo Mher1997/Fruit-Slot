@@ -6,6 +6,7 @@ const Engine = Matter.Engine,
   World = Matter.World,
   Body = Matter.Body,
   Runner = Matter.Runner,
+  Render = Matter.Render,
   Bodies = Matter.Bodies,
   Events = Matter.Events,
   Mouse = Matter.Mouse,
@@ -47,9 +48,9 @@ resize();
 class AppInit {
   constructor(length) {
     this.length = length || AppInit?._instance?.length;
-    this.gapX = w / (this.length * 1.5);
+    this.gapX = (w * 0.7) / this.length;
     this.gapY = this.gapX * 1.2;
-    this.plinkRadius = this.gapX / 6.6;
+    this.plinkRadius = this.gapX / (4.3 * 2); // * 2 for matter and pixi bodies
     this.cloudY = 200;
     this.sceneContainerWidth = canvasContainer.clientWidth;
     this.sceneContainerHeight = canvasContainer.clientHeight;
@@ -94,7 +95,7 @@ class AppInit {
     AppInit._instance = this;
 
     engine.gravity.y = 1.6;
-    engine.gravity.scale = plinkRadius / 4000;
+    engine.gravity.scale = (plinkRadius / 4) * 0.001;
 
     await PIXI.Assets.init({
       manifest: require("./core/resources/manifest.json"),
@@ -126,15 +127,6 @@ class AppInit {
       background.height = sceneContainerHeight;
       backgroundDetail.width = sceneContainerWidth;
       backgroundDetail.height = sceneContainerHeight;
-
-      // Container.pivot.x = Container.width / 2;
-      // Container.pivot.y = Container.height / 2;
-      // Container.y = Container.width / 2;
-      // Container.x = Container.height / 2;
-
-      // Container.width = w / ratio - 22;
-      // Container.height = h;
-      // Container.scale.set(1, 1);
     };
 
     window.addEventListener("resize", () => {

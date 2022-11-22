@@ -8,7 +8,7 @@ class BallCreator extends PlinkoCreator {
     super();
     this.ballCategory = 0x0002;
     this.ways = this.length - 2;
-    this.ballRadius = this.plinkRadius * 2.3;
+    this.ballRadius = this.plinkRadius * 3.4;
   }
 
   handlePlink = () => {
@@ -34,7 +34,7 @@ class BallCreator extends PlinkoCreator {
     //     ? Math.floor(Math.random(0, ways) * 10)
     //     : resultAction.get();
 
-    let result = 7;
+    let result = 2;
 
     for (let i = 0; i < ways; i++) {
       resWays.push(i < result ? "+" : "-");
@@ -42,7 +42,7 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: cloudY - 50,
+      y: cloudY * 0.5,
       resWays,
       texture: ball,
       radius: ballRadius,
@@ -50,6 +50,7 @@ class BallCreator extends PlinkoCreator {
       mask: plinkoCategory,
     });
 
+    // console.log({ ballRadius, plinkRadius, gapX }, "ballRadius");
     Container.addChild(graphics);
     World.addBody(world, body);
 
@@ -104,7 +105,7 @@ class BallCreator extends PlinkoCreator {
   };
 
   async init() {
-    setInterval(this.handlePlink, 500);
+    setInterval(this.handlePlink, 100);
     // this.renderButton();
   }
 }

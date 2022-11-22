@@ -6,14 +6,13 @@ let graphicKey = 1;
 
 const PlinkoBall = (options) => {
   const { x, y, radius, resWays, mask, category, texture } = options;
-
   const shuffledWays = shuffle(resWays);
 
   const body = Bodies.circle(x, y, radius, {
     isStatic: false,
     type: "body",
     friction: 1, // lprcun
-    density: 0.8, // xtutyun
+    density: radius / 50, // xtutyun
     restitution: 0.8, //bouncing
     label: "ball",
     graphicKey,

@@ -8,7 +8,7 @@ const Plink = (options) => {
     isStatic: true,
     friction: 1,
     restitution: 0.8,
-    density: 1,
+    density: radius / 10,
     collisionFilter: {
       category,
     },
