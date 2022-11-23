@@ -11,7 +11,7 @@ const PlinkoBall = (options) => {
   const body = Bodies.circle(x, y, radius, {
     isStatic: false,
     type: "body",
-    friction: 1, // lprcun
+    friction: radius / 50, // lprcun
     density: radius / 50, // xtutyun
     restitution: 0.8, //bouncing
     label: "ball",

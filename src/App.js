@@ -51,7 +51,7 @@ class AppInit {
     this.gapX = (w * 0.7) / this.length;
     this.gapY = this.gapX * 1.2;
     this.plinkRadius = this.gapX / (4.3 * 2); // * 2 for matter and pixi bodies
-    this.cloudY = 200;
+    this.cloudHeight = this.gapX * 2.8 + 50;
     this.sceneContainerWidth = canvasContainer.clientWidth;
     this.sceneContainerHeight = canvasContainer.clientHeight;
     this.sceneContainerCenter = this.sceneContainerWidth / 2;

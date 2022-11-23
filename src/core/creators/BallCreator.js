@@ -18,7 +18,7 @@ class BallCreator extends PlinkoCreator {
       world,
       ballRadius,
       ballCategory,
-      cloudY,
+      cloudHeight,
       plinkoCategory,
       sceneContainerCenter,
       addSceneObject,
@@ -42,7 +42,7 @@ class BallCreator extends PlinkoCreator {
 
     const { body, graphics } = PlinkoBall({
       x: sceneContainerCenter,
-      y: cloudY * 0.5,
+      y: cloudHeight * 0.8,
       resWays,
       texture: ball,
       radius: ballRadius,

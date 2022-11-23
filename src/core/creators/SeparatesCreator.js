@@ -11,7 +11,7 @@ class SeparatesCreator extends PlinkoCreator {
       gapX,
       length,
       plinkRadius,
-      cloudY,
+      cloudHeight,
       sceneContainerCenter,
       gapY,
       world,
@@ -26,7 +26,7 @@ class SeparatesCreator extends PlinkoCreator {
     const width = gapX - plinkRadius;
     const height = width / 1.32;
     const loadGameAssets = await Assets.loadBundle("separates");
-    const separateY = (length - 2) * gapY + cloudY;
+    const separateY = (length - 2) * gapY + cloudHeight;
 
     const handleChangeResult = () => {
       const result = resultAction.get();
