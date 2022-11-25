@@ -1,40 +1,38 @@
-import { Assets, Graphics, Text, TextStyle } from "pixi.js";
-import PlinkoBall from "../../components/plinkoBall";
-import PlinkoCreator from "./PlinkosCreator";
-import { resultAction } from "../helpers";
+import { Graphics, Text, TextStyle } from "pixi.js";
+import AppRoot from "../AppRoot";
+import PlinkoBall from "../components/plinkoBall";
+import appConstants from "../core/constants";
+import { getAsset, resultAction } from "../core/helpers";
+import { store } from "../core/store";
 
-class BallCreator extends PlinkoCreator {
-  constructor() {
-    super();
-    this.ballCategory = 0x0002;
-    this.ways = this.length - 2;
-    this.ballRadius = this.plinkRadius * 3.4;
+const { ballCategory, plinkoCategory } = appConstants.categories;
+
+class BallCreator extends AppRoot {
+  async init() {
+    // setInterval(this.handlePlink, 100);
+    this.renderButton();
   }
 
-  handlePlink = () => {
+  handlePlink = async () => {
+    const { length, cloudHeight, ballRadius } = store.get();
     const {
-      Container,
-      ways,
-      world,
-      ballRadius,
-      ballCategory,
-      cloudHeight,
-      plinkoCategory,
+      sceneContainer,
       sceneContainerCenter,
-      addSceneObject,
+      world,
       World,
+      addSceneObject,
     } = this;
 
+    const ways = length - 2;
     const ballType = Math.floor(Math.random() * 3) + 1;
-    const ball = Assets.get(`ballTexture-${ballType}`);
-
+    const ball = await getAsset(`ballTexture-${ballType}`);
     let resWays = [];
     // let result =
     //   resultAction.get() === "Random"
     //     ? Math.floor(Math.random(0, ways) * 10)
     //     : resultAction.get();
 
-    let result = 2;
+    let result = 1;
 
     for (let i = 0; i < ways; i++) {
       resWays.push(i < result ? "+" : "-");
@@ -50,8 +48,7 @@ class BallCreator extends PlinkoCreator {
       mask: plinkoCategory,
     });
 
-    // console.log({ ballRadius, plinkRadius, gapX }, "ballRadius");
-    Container.addChild(graphics);
+    sceneContainer.addChild(graphics);
     World.addBody(world, body);
 
     addSceneObject({
@@ -61,10 +58,10 @@ class BallCreator extends PlinkoCreator {
   };
 
   renderButton = () => {
-    const { Container, handlePlink } = this;
+    const { sceneContainer, handlePlink } = this;
 
     const button = new Graphics();
-    const [x, y] = [this.sceneContainerCenter + 100, 100];
+    const [x, y] = [this.sceneContainerCenter + 400, 400];
 
     button.beginFill(0xde3249);
     button.drawCircle(x, y, 20);
@@ -101,13 +98,8 @@ class BallCreator extends PlinkoCreator {
       handlePlink();
     });
 
-    Container.addChild(button, buttonText);
+    sceneContainer.addChild(button, buttonText);
   };
-
-  async init() {
-    // setInterval(this.handlePlink, 100);
-    this.renderButton();
-  }
 }
 
 export default BallCreator;

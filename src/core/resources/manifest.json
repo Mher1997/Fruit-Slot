@@ -4,11 +4,11 @@
       "name": "load-screen",
       "assets": [
         {
-          "name": "background",
+          "name": "backgroundTexture",
           "srcs": "images/background.png"
         },
         {
-          "name": "backgroundDetail",
+          "name": "backgroundDetailTexture",
           "srcs": "images/background-details.png"
         }
       ]
@@ -39,6 +39,18 @@
         {
           "name": "plinkActiveTexture",
           "srcs": "images/plink-active.png"
+        },
+        {
+          "name": "lineChangeBoxTexture",
+          "srcs": "images/line-change-box.png"
+        },
+        {
+          "name": "minusTexture",
+          "srcs": "images/minus.png"
+        },
+        {
+          "name": "plusTexture",
+          "srcs": "images/plus.png"
         }
       ]
     },

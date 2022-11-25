@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 export const shuffle = (array) => {
   let currentIndex = array.length,
     randomIndex;
@@ -53,3 +55,7 @@ export const resultAction = (() => {
     change: (value) => (result = value),
   };
 })();
+
+export const getAssets = async (...args) => await PIXI.Assets.load([...args]);
+
+export const getAsset = async (arg) => await PIXI.Assets.get(arg);

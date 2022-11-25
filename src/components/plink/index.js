@@ -6,9 +6,9 @@ const Plink = (options) => {
 
   const body = Bodies.circle(x, y, radius, {
     isStatic: true,
+    density: 1,
     friction: 1,
-    restitution: 0.8,
-    density: radius / 10,
+    restitution: 0,
     collisionFilter: {
       category,
     },
@@ -21,6 +21,7 @@ const Plink = (options) => {
   graphics.x = x;
   graphics.y = y;
   graphics.zIndex = 1;
+  graphics.label = "plink";
   graphics.graphicKey = graphicKey;
   graphics.width = radius * 2;
   graphics.height = radius * 2;

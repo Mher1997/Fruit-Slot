@@ -1,6 +1,6 @@
-import AppInit from "../../App";
 import TWEEN from "@tweenjs/tween.js";
-import { Assets } from "pixi.js";
+import AppInit from "../../AppRoot";
+import { getAsset } from "../helpers";
 
 class EventsListeners extends AppInit {
   constructor() {
@@ -9,21 +9,24 @@ class EventsListeners extends AppInit {
       TWEEN.update();
     });
   }
-  init() {
+
+  async init() {
     const {
       Events,
       World,
       world,
       engine,
-      Container,
+      sceneContainer,
       getGraphicByBodyKey,
       textResultAnimate,
       handleCollisionBall,
     } = this;
 
+    this.plinkTexture = await getAsset("plinkTexture");
+    this.plinkActiveTexture = await getAsset("plinkActiveTexture");
+
     Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
-      const plinkActiveTexture = Assets.get("plinkActiveTexture");
 
       for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
@@ -38,7 +41,7 @@ class EventsListeners extends AppInit {
               const separateGraphic = getGraphicByBodyKey(value);
               const ballGraphic = getGraphicByBodyKey(ballBody);
 
-              Container.removeChild(ballGraphic);
+              sceneContainer.removeChild(ballGraphic);
               World.remove(world, ballBody);
 
               if (!separateGraphic?.isActiveAnimation) {
@@ -47,8 +50,7 @@ class EventsListeners extends AppInit {
               break;
             case "plink":
               const plinkoGraphic = getGraphicByBodyKey(value);
-              plinkoGraphic.texture = plinkActiveTexture;
-            // plinkoGraphic.scale.set(1);
+              plinkoGraphic.texture = this.plinkActiveTexture;
             default:
               break;
           }
@@ -58,7 +60,6 @@ class EventsListeners extends AppInit {
 
     Events.on(engine, "collisionEnd", (event) => {
       const pairs = event.pairs;
-      const plinkTexture = Assets.get("plinkTexture");
 
       for (let i = 0; i < pairs.length; i++) {
         const pair = pairs[i];
@@ -73,7 +74,7 @@ class EventsListeners extends AppInit {
               break;
             case "plink":
               const plinkoGraphic = getGraphicByBodyKey(value);
-              plinkoGraphic.texture = plinkTexture;
+              plinkoGraphic.texture = this.plinkTexture;
               break;
             default:
               break;
@@ -84,20 +85,20 @@ class EventsListeners extends AppInit {
   }
 
   getGraphicByBodyKey = (body, key = "graphicKey") => {
-    const { Container } = this;
+    const { sceneContainer } = this;
     const bodyValue = body[key];
-    const graphic = Container.children.find((item) => item[key] === bodyValue);
+    const graphic = sceneContainer.children.find(
+      (item) => item[key] === bodyValue
+    );
     return graphic;
   };
 
   handleCollisionBall = (ballBody, plinkBody) => {
-    const radToDeg = 180 / Math.PI;
-    const { Body, gapX } = this;
+    const { Body } = this;
 
+    const radToDeg = 180 / Math.PI;
     const differenceY = plinkBody.position.y - ballBody.position.y;
     const differenceX = plinkBody.position.x - ballBody.position.x;
-
-    // console.log(ballBody);
 
     if (differenceY > 0) {
       const collisionDeg =
@@ -107,8 +108,8 @@ class EventsListeners extends AppInit {
         const resWays = ballBody.resWays;
         const plinkoRow = plinkBody.rowIndex;
         const directionToRight = resWays[plinkoRow - 2] === "+";
-        const distanceX = gapX / 40;
-        const distanceY = -gapX / 13;
+        const distanceX = plinkBody.circleRadius / 5;
+        const distanceY = -ballBody.circleRadius / 5;
         // const isNastyDirection =
         //   (directionToRight && differenceX >= 0) ||
         //   (!directionToRight && differenceX <= 0);
