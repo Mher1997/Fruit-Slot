@@ -14,7 +14,7 @@ const plinkosContainerRatio = 702 / 550;
 const plinkContainerHeight = h / plinkosContainerRatio;
 
 const defaultParams = {
-  length: 16,
+  length: 20,
 };
 
 const setStateByLength = (length) => {
@@ -28,9 +28,10 @@ const setStateByLength = (length) => {
   state.cloudHeight = h / 4;
   state.plinkRadius = gap / 4.3 / 2; // "/2" for matter and pixi bodies
   state.ballRadius = state.gapX / 2 - state.plinkRadius;
-  state.gravity = 1.3;
-  state.gravityScale = state.ballRadius * 0.00014;
-
+  state.gravity = state.ballRadius / 6;
+  state.plinkContainerHeight = plinkContainerHeight;
+  state.gravityScale = gap * 0.00005;
+  console.log(gap, "gap");
   return state;
 };
 

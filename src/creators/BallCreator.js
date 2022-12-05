@@ -97,8 +97,7 @@ class BallCreator extends AppRoot {
       handlePlink();
     });
 
-    // setInterval(handlePlink, 200);
-
+    // setInterval(handlePlink, 2000);
     sceneContainer.addChild(button, buttonText);
   };
 }

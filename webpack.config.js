@@ -51,13 +51,13 @@ module.exports = {
     },
   },
   devServer: {
-    port: 1300,
+    port: 1313,
     static: {
       directory: path.resolve(__dirname, "./docs"),
     },
     devMiddleware: {
       index: "index.html",
-      // writeToDisk: true,
+      writeToDisk: true,
     },
   },
   module: {

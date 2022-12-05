@@ -125,8 +125,8 @@ class EventsListeners extends AppInit {
         const resWays = ballBody.resWays;
         const plinkoRow = plinkBody.rowIndex;
         const directionToRight = resWays[plinkoRow - 2] === "+";
-        const distanceX = plinkBody.circleRadius / 5;
-        const distanceY = -ballBody.circleRadius / 4.5;
+        const distanceX = plinkBody.circleRadius / 4;
+        const distanceY = -ballBody.circleRadius / 6;
         // const isNastyDirection =
         //   (directionToRight && differenceX >= 0) ||
         //   (!directionToRight && differenceX <= 0);

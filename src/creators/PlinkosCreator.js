@@ -33,7 +33,7 @@ class PlinkosCreator extends AppInit {
 
   render() {
     const { gapY, gapX, length, plinkRadius, cloudHeight } = store.get();
-    const { sceneContainerCenter, container, world, World } = this;
+    const { sceneContainerCenter, container, world, World, engine } = this;
 
     const texture = PlinkosCreator.asset;
 

@@ -11,12 +11,27 @@ const PlinkoBall = (options) => {
   const body = Bodies.circle(x, y, radius, {
     isStatic: false,
     type: "body",
-    friction: 1, // lprcun
-    density: 1, // xtutyun
-    restitution: 0.3, //bouncing
+    // friction: 0.5, // lprcun
+    density: radius / 100, // xtutyun
+    restitution: 0.4, //bouncing
     label: "ball",
     graphicKey,
-    resWays: shuffledWays,
+    resWays: [
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "+",
+      "-",
+      "-",
+      "-",
+      "-",
+      "+",
+      "-",
+    ],
     collisionFilter: {
       mask,
       category,

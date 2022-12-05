@@ -92,14 +92,15 @@ class AppRoot {
 
   async init() {
     Runner.run(engine);
-    this.update();
     this.handleAddTicker();
-    this.createStageRoot();
+    await this.createStageRoot();
+    this.update();
   }
 
   update() {
-    const { gravity, gravityScale } = store.get();
-    engine.gravity.y = gravity;
+    const { gravityScale } = store.get();
+    engine.gravity.y = 1;
+    console.log(gravityScale, "gravityScale");
     engine.gravity.scale = gravityScale;
   }
 }
